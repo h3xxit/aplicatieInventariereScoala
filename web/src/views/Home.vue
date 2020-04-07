@@ -1,6 +1,6 @@
 <template>
   <div>
-    <MainPage />
+    <MainPage class="uk-padding"/>
   </div>
 </template>
 
