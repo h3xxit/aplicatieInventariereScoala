@@ -11,6 +11,7 @@ export default {
   name: 'Home',
   components: {
     MainPage
+    
   }
 }
 </script>

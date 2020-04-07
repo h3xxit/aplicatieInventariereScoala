@@ -1,6 +1,6 @@
 <template>
   <div>
-      <h1 class="uk-padding">Obiect negasit</h1>
+      <h1 class="uk-text-center uk-padding">Obiect negasit</h1>
   </div>
 </template>
 
