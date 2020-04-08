@@ -1,32 +1,34 @@
 <template>
   <div class="uk-padding">
     <h1 class="uk-text-center">Obiect scanat</h1>
-    <p class="uk-text-center">Nume obiect {{name}}</p>
-    <p class="uk-text-center">Camera din care provine {{room}}</p>
+    <p class="uk-text-center">Nume obiect {{info.name}}</p>
+    <p class="uk-text-center">Camera din care provine {{info.room}}</p>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
+import { db } from '@/firebase/db.js';
 
 export default {
   name: 'MainPage',
   data() {
     return {
-      info: {
-        id: Number,
-        name: String,
-        room: String
-      }
+      info: null,
+      objects: [],
+      objectsBySchool: [],
+      school: String,
+      id: Number
     }
   }, 
-  mounted () {
-    /*axios
-      .get('linkGet')
-      .then(response => (this.info = response))
-      .catch(error => this.$router.push({name: "NotFound"}))
-    */
-  }
+  created() {
+    school = this.$router.params.school;
+    id = this.$router.params.id;
+  },
+  firebase: {
+    objects: db.ref('Objects'),
+    objectsBySchool: objects.equalTo(school),
+    info: objectsBySchool.equalTo(id).toJSON(),
+  },
 }
 </script>
 
