@@ -9,12 +9,6 @@
             Represents a BSON Oid (object id).
             </summary>
         </member>
-        <member name="M:Newtonsoft.Json.Bson.BsonObjectId.#ctor(System.Byte[])">
-            <summary>
-            Initializes a new instance of the <see cref="T:Newtonsoft.Json.Bson.BsonObjectId"/> class.
-            </summary>
-            <param name="value">The Oid value.</param>
-        </member>
         <member name="P:Newtonsoft.Json.Bson.BsonObjectId.Value">
             <summary>
             Gets or sets the value of the Oid.
@@ -2425,7 +2419,7 @@
         </member>
         <member name="P:Newtonsoft.Json.JsonReader.TokenType">
             <summary>
-            Gets the type of the current JSON token.
+            Gets the type of the current JSON token. 
             </summary>
         </member>
         <member name="P:Newtonsoft.Json.JsonReader.Value">
@@ -2446,7 +2440,7 @@
         </member>
         <member name="P:Newtonsoft.Json.JsonReader.Path">
             <summary>
-            Gets the path of the current JSON token.
+            Gets the path of the current JSON token. 
             </summary>
         </member>
         <member name="P:Newtonsoft.Json.JsonReader.Culture">
@@ -2871,50 +2865,50 @@
         <member name="M:Newtonsoft.Json.JsonSerializer.Create">
             <summary>
             Creates a new <see cref="T:Newtonsoft.Json.JsonSerializer"/> instance.
-            The <see cref="T:Newtonsoft.Json.JsonSerializer"/> will not use default settings
+            The <see cref="T:Newtonsoft.Json.JsonSerializer"/> will not use default settings 
             from <see cref="P:Newtonsoft.Json.JsonConvert.DefaultSettings"/>.
             </summary>
             <returns>
             A new <see cref="T:Newtonsoft.Json.JsonSerializer"/> instance.
-            The <see cref="T:Newtonsoft.Json.JsonSerializer"/> will not use default settings
+            The <see cref="T:Newtonsoft.Json.JsonSerializer"/> will not use default settings 
             from <see cref="P:Newtonsoft.Json.JsonConvert.DefaultSettings"/>.
             </returns>
         </member>
         <member name="M:Newtonsoft.Json.JsonSerializer.Create(Newtonsoft.Json.JsonSerializerSettings)">
             <summary>
             Creates a new <see cref="T:Newtonsoft.Json.JsonSerializer"/> instance using the specified <see cref="T:Newtonsoft.Json.JsonSerializerSettings"/>.
-            The <see cref="T:Newtonsoft.Json.JsonSerializer"/> will not use default settings
+            The <see cref="T:Newtonsoft.Json.JsonSerializer"/> will not use default settings 
             from <see cref="P:Newtonsoft.Json.JsonConvert.DefaultSettings"/>.
             </summary>
             <param name="settings">The settings to be applied to the <see cref="T:Newtonsoft.Json.JsonSerializer"/>.</param>
             <returns>
             A new <see cref="T:Newtonsoft.Json.JsonSerializer"/> instance using the specified <see cref="T:Newtonsoft.Json.JsonSerializerSettings"/>.
-            The <see cref="T:Newtonsoft.Json.JsonSerializer"/> will not use default settings
+            The <see cref="T:Newtonsoft.Json.JsonSerializer"/> will not use default settings 
             from <see cref="P:Newtonsoft.Json.JsonConvert.DefaultSettings"/>.
             </returns>
         </member>
         <member name="M:Newtonsoft.Json.JsonSerializer.CreateDefault">
             <summary>
             Creates a new <see cref="T:Newtonsoft.Json.JsonSerializer"/> instance.
-            The <see cref="T:Newtonsoft.Json.JsonSerializer"/> will use default settings
+            The <see cref="T:Newtonsoft.Json.JsonSerializer"/> will use default settings 
             from <see cref="P:Newtonsoft.Json.JsonConvert.DefaultSettings"/>.
             </summary>
             <returns>
             A new <see cref="T:Newtonsoft.Json.JsonSerializer"/> instance.
-            The <see cref="T:Newtonsoft.Json.JsonSerializer"/> will use default settings
+            The <see cref="T:Newtonsoft.Json.JsonSerializer"/> will use default settings 
             from <see cref="P:Newtonsoft.Json.JsonConvert.DefaultSettings"/>.
             </returns>
         </member>
         <member name="M:Newtonsoft.Json.JsonSerializer.CreateDefault(Newtonsoft.Json.JsonSerializerSettings)">
             <summary>
             Creates a new <see cref="T:Newtonsoft.Json.JsonSerializer"/> instance using the specified <see cref="T:Newtonsoft.Json.JsonSerializerSettings"/>.
-            The <see cref="T:Newtonsoft.Json.JsonSerializer"/> will use default settings
+            The <see cref="T:Newtonsoft.Json.JsonSerializer"/> will use default settings 
             from <see cref="P:Newtonsoft.Json.JsonConvert.DefaultSettings"/> as well as the specified <see cref="T:Newtonsoft.Json.JsonSerializerSettings"/>.
             </summary>
             <param name="settings">The settings to be applied to the <see cref="T:Newtonsoft.Json.JsonSerializer"/>.</param>
             <returns>
             A new <see cref="T:Newtonsoft.Json.JsonSerializer"/> instance using the specified <see cref="T:Newtonsoft.Json.JsonSerializerSettings"/>.
-            The <see cref="T:Newtonsoft.Json.JsonSerializer"/> will use default settings
+            The <see cref="T:Newtonsoft.Json.JsonSerializer"/> will use default settings 
             from <see cref="P:Newtonsoft.Json.JsonConvert.DefaultSettings"/> as well as the specified <see cref="T:Newtonsoft.Json.JsonSerializerSettings"/>.
             </returns>
         </member>
@@ -4260,7 +4254,7 @@
         </member>
         <member name="M:Newtonsoft.Json.JsonTextWriter.WriteComment(System.String)">
             <summary>
-            Writes a comment <c>/*...*/</c> containing the specified text.
+            Writes a comment <c>/*...*/</c> containing the specified text. 
             </summary>
             <param name="text">Text to place inside the comment.</param>
         </member>
@@ -4394,7 +4388,7 @@
         </member>
         <member name="P:Newtonsoft.Json.JsonValidatingReader.Path">
             <summary>
-            Gets the path of the current JSON token.
+            Gets the path of the current JSON token. 
             </summary>
         </member>
         <member name="P:Newtonsoft.Json.JsonValidatingReader.QuoteChar">
@@ -5168,7 +5162,7 @@
         </member>
         <member name="P:Newtonsoft.Json.JsonWriter.Path">
             <summary>
-            Gets the path of the writer.
+            Gets the path of the writer. 
             </summary>
         </member>
         <member name="P:Newtonsoft.Json.JsonWriter.Formatting">
@@ -5821,7 +5815,7 @@
         </member>
         <member name="M:Newtonsoft.Json.Linq.JArray.LoadAsync(Newtonsoft.Json.JsonReader,System.Threading.CancellationToken)">
             <summary>
-            Asynchronously loads a <see cref="T:Newtonsoft.Json.Linq.JArray"/> from a <see cref="T:Newtonsoft.Json.JsonReader"/>.
+            Asynchronously loads a <see cref="T:Newtonsoft.Json.Linq.JArray"/> from a <see cref="T:Newtonsoft.Json.JsonReader"/>. 
             </summary>
             <param name="reader">A <see cref="T:Newtonsoft.Json.JsonReader"/> that will be read for the content of the <see cref="T:Newtonsoft.Json.Linq.JArray"/>.
             If this is <c>null</c>, default load settings will be used.</param>
@@ -5830,7 +5824,7 @@
         </member>
         <member name="M:Newtonsoft.Json.Linq.JArray.LoadAsync(Newtonsoft.Json.JsonReader,Newtonsoft.Json.Linq.JsonLoadSettings,System.Threading.CancellationToken)">
             <summary>
-            Asynchronously loads a <see cref="T:Newtonsoft.Json.Linq.JArray"/> from a <see cref="T:Newtonsoft.Json.JsonReader"/>.
+            Asynchronously loads a <see cref="T:Newtonsoft.Json.Linq.JArray"/> from a <see cref="T:Newtonsoft.Json.JsonReader"/>. 
             </summary>
             <param name="reader">A <see cref="T:Newtonsoft.Json.JsonReader"/> that will be read for the content of the <see cref="T:Newtonsoft.Json.Linq.JArray"/>.</param>
             <param name="settings">The <see cref="T:Newtonsoft.Json.Linq.JsonLoadSettings"/> used to load the JSON.
@@ -5875,14 +5869,14 @@
         </member>
         <member name="M:Newtonsoft.Json.Linq.JArray.Load(Newtonsoft.Json.JsonReader)">
             <summary>
-            Loads an <see cref="T:Newtonsoft.Json.Linq.JArray"/> from a <see cref="T:Newtonsoft.Json.JsonReader"/>.
+            Loads an <see cref="T:Newtonsoft.Json.Linq.JArray"/> from a <see cref="T:Newtonsoft.Json.JsonReader"/>. 
             </summary>
             <param name="reader">A <see cref="T:Newtonsoft.Json.JsonReader"/> that will be read for the content of the <see cref="T:Newtonsoft.Json.Linq.JArray"/>.</param>
             <returns>A <see cref="T:Newtonsoft.Json.Linq.JArray"/> that contains the JSON that was read from the specified <see cref="T:Newtonsoft.Json.JsonReader"/>.</returns>
         </member>
         <member name="M:Newtonsoft.Json.Linq.JArray.Load(Newtonsoft.Json.JsonReader,Newtonsoft.Json.Linq.JsonLoadSettings)">
             <summary>
-            Loads an <see cref="T:Newtonsoft.Json.Linq.JArray"/> from a <see cref="T:Newtonsoft.Json.JsonReader"/>.
+            Loads an <see cref="T:Newtonsoft.Json.Linq.JArray"/> from a <see cref="T:Newtonsoft.Json.JsonReader"/>. 
             </summary>
             <param name="reader">A <see cref="T:Newtonsoft.Json.JsonReader"/> that will be read for the content of the <see cref="T:Newtonsoft.Json.Linq.JArray"/>.</param>
             <param name="settings">The <see cref="T:Newtonsoft.Json.Linq.JsonLoadSettings"/> used to load the JSON.
@@ -6336,7 +6330,7 @@
             Returns a hash code for this instance.
             </summary>
             <returns>
-            A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
+            A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
             </returns>
         </member>
         <member name="T:Newtonsoft.Json.Linq.JObject">
@@ -6902,7 +6896,7 @@
             <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="P:System.Threading.CancellationToken.None"/>.</param>
             <returns>
             A <see cref="T:System.Threading.Tasks.Task`1"/> that represents the asynchronous creation. The
-            <see cref="P:System.Threading.Tasks.Task`1.Result"/> property returns a <see cref="T:Newtonsoft.Json.Linq.JToken"/> that contains
+            <see cref="P:System.Threading.Tasks.Task`1.Result"/> property returns a <see cref="T:Newtonsoft.Json.Linq.JToken"/> that contains 
             the token and its descendant tokens
             that were read from the reader. The runtime type of the token is determined
             by the token type of the first token encountered in the reader.
@@ -6918,7 +6912,7 @@
             <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="P:System.Threading.CancellationToken.None"/>.</param>
             <returns>
             A <see cref="T:System.Threading.Tasks.Task`1"/> that represents the asynchronous creation. The
-            <see cref="P:System.Threading.Tasks.Task`1.Result"/> property returns a <see cref="T:Newtonsoft.Json.Linq.JToken"/> that contains
+            <see cref="P:System.Threading.Tasks.Task`1.Result"/> property returns a <see cref="T:Newtonsoft.Json.Linq.JToken"/> that contains 
             the token and its descendant tokens
             that were read from the reader. The runtime type of the token is determined
             by the token type of the first token encountered in the reader.
@@ -7006,7 +7000,7 @@
         </member>
         <member name="P:Newtonsoft.Json.Linq.JToken.Path">
             <summary>
-            Gets the path of the JSON token.
+            Gets the path of the JSON token. 
             </summary>
         </member>
         <member name="M:Newtonsoft.Json.Linq.JToken.AddAfterSelf(System.Object)">
@@ -7891,55 +7885,17 @@
             </summary>
             <param name="token">The token to read from.</param>
         </member>
-        <member name="M:Newtonsoft.Json.Linq.JTokenReader.ReadAsBytes">
-            <summary>
-            Reads the next JSON token from the stream as a <see cref="T:Byte[]"/>.
-            </summary>
-            <returns>
-            A <see cref="T:Byte[]"/> or a null reference if the next JSON token is null. This method will return <c>null</c> at the end of an array.
-            </returns>
-        </member>
-        <member name="M:Newtonsoft.Json.Linq.JTokenReader.ReadAsDecimal">
-            <summary>
-            Reads the next JSON token from the stream as a <see cref="T:System.Nullable`1"/>.
-            </summary>
-            <returns>A <see cref="T:System.Nullable`1"/>. This method will return <c>null</c> at the end of an array.</returns>
-        </member>
-        <member name="M:Newtonsoft.Json.Linq.JTokenReader.ReadAsInt32">
-            <summary>
-            Reads the next JSON token from the stream as a <see cref="T:System.Nullable`1"/>.
-            </summary>
-            <returns>A <see cref="T:System.Nullable`1"/>. This method will return <c>null</c> at the end of an array.</returns>
-        </member>
-        <member name="M:Newtonsoft.Json.Linq.JTokenReader.ReadAsString">
-            <summary>
-            Reads the next JSON token from the stream as a <see cref="T:System.String"/>.
-            </summary>
-            <returns>A <see cref="T:System.String"/>. This method will return <c>null</c> at the end of an array.</returns>
-        </member>
-        <member name="M:Newtonsoft.Json.Linq.JTokenReader.ReadAsDateTime">
-            <summary>
-            Reads the next JSON token from the stream as a <see cref="T:System.Nullable`1"/>.
-            </summary>
-            <returns>A <see cref="T:System.String"/>. This method will return <c>null</c> at the end of an array.</returns>
-        </member>
-        <member name="M:Newtonsoft.Json.Linq.JTokenReader.ReadAsDateTimeOffset">
-            <summary>
-            Reads the next JSON token from the stream as a <see cref="T:System.Nullable`1"/>.
-            </summary>
-            <returns>A <see cref="T:System.Nullable`1"/>. This method will return <c>null</c> at the end of an array.</returns>
-        </member>
         <member name="M:Newtonsoft.Json.Linq.JTokenReader.Read">
             <summary>
-            Reads the next JSON token from the stream.
+            Reads the next JSON token from the underlying <see cref="T:Newtonsoft.Json.Linq.JToken"/>.
             </summary>
             <returns>
-            true if the next token was read successfully; false if there are no more tokens to read.
+            <c>true</c> if the next token was read successfully; <c>false</c> if there are no more tokens to read.
             </returns>
         </member>
         <member name="P:Newtonsoft.Json.Linq.JTokenReader.Path">
             <summary>
-            Gets the path of the current JSON token.
+            Gets the path of the current JSON token. 
             </summary>
         </member>
         <member name="T:Newtonsoft.Json.Linq.JTokenType">
@@ -8654,7 +8610,7 @@
             Note that references cannot be preserved when a value is set via a non-default constructor such as types that implement <see cref="T:System.Runtime.Serialization.ISerializable"/>.
             </summary>
             <example>
-              <code lang="cs" source="..\Src\Newtonsoft.Json.Tests\Documentation\SerializationTests.cs" region="PreservingObjectReferencesOn" title="Preserve Object References" />
+              <code lang="cs" source="..\Src\Newtonsoft.Json.Tests\Documentation\SerializationTests.cs" region="PreservingObjectReferencesOn" title="Preserve Object References" />       
             </example>
         </member>
         <member name="F:Newtonsoft.Json.PreserveReferencesHandling.None">
@@ -9634,26 +9590,15 @@
             Represents a trace writer that writes to the application's <see cref="T:System.Diagnostics.TraceListener"/> instances.
             </summary>
         </member>
-        <member name="T:Newtonsoft.Json.Serialization.ITraceWriter">
-            <summary>
-            Represents a trace writer.
-            </summary>
-        </member>
-        <member name="M:Newtonsoft.Json.Serialization.ITraceWriter.Trace(System.Diagnostics.TraceLevel,System.String,System.Exception)">
-            <summary>
-            Writes the specified trace level, message and optional exception.
-            </summary>
-            <param name="level">The <see cref="T:System.Diagnostics.TraceLevel"/> at which to write this trace.</param>
-            <param name="message">The trace message.</param>
-            <param name="ex">The trace exception. This parameter is optional.</param>
-        </member>
-        <member name="P:Newtonsoft.Json.Serialization.ITraceWriter.LevelFilter">
+        <member name="P:Newtonsoft.Json.Serialization.DiagnosticsTraceWriter.LevelFilter">
             <summary>
             Gets the <see cref="T:System.Diagnostics.TraceLevel"/> that will be used to filter the trace messages passed to the writer.
-            For example a filter level of <code>Info</code> will exclude <code>Verbose</code> messages and include <code>Info</code>,
-            <code>Warning</code> and <code>Error</code> messages.
+            For example a filter level of <see cref="F:System.Diagnostics.TraceLevel.Info"/> will exclude <see cref="F:System.Diagnostics.TraceLevel.Verbose"/> messages and include <see cref="F:System.Diagnostics.TraceLevel.Info"/>,
+            <see cref="F:System.Diagnostics.TraceLevel.Warning"/> and <see cref="F:System.Diagnostics.TraceLevel.Error"/> messages.
             </summary>
-            <value>The <see cref="T:System.Diagnostics.TraceLevel"/> that will be used to filter the trace messages passed to the writer.</value>
+            <value>
+            The <see cref="T:System.Diagnostics.TraceLevel"/> that will be used to filter the trace messages passed to the writer.
+            </value>
         </member>
         <member name="M:Newtonsoft.Json.Serialization.DiagnosticsTraceWriter.Trace(System.Diagnostics.TraceLevel,System.String,System.Exception)">
             <summary>
@@ -9663,39 +9608,10 @@
             <param name="message">The trace message.</param>
             <param name="ex">The trace exception. This parameter is optional.</param>
         </member>
-        <member name="P:Newtonsoft.Json.Serialization.DiagnosticsTraceWriter.LevelFilter">
-            <summary>
-            Gets the <see cref="T:System.Diagnostics.TraceLevel"/> that will be used to filter the trace messages passed to the writer.
-            For example a filter level of <code>Info</code> will exclude <code>Verbose</code> messages and include <code>Info</code>,
-            <code>Warning</code> and <code>Error</code> messages.
-            </summary>
-            <value>
-            The <see cref="T:System.Diagnostics.TraceLevel"/> that will be used to filter the trace messages passed to the writer.
-            </value>
-        </member>
         <member name="T:Newtonsoft.Json.Serialization.DynamicValueProvider">
             <summary>
             Get and set values for a <see cref="T:System.Reflection.MemberInfo"/> using dynamic methods.
             </summary>
-        </member>
-        <member name="T:Newtonsoft.Json.Serialization.IValueProvider">
-            <summary>
-            Provides methods to get and set values.
-            </summary>
-        </member>
-        <member name="M:Newtonsoft.Json.Serialization.IValueProvider.SetValue(System.Object,System.Object)">
-            <summary>
-            Sets the value.
-            </summary>
-            <param name="target">The target to set the value on.</param>
-            <param name="value">The value to set on the target.</param>
-        </member>
-        <member name="M:Newtonsoft.Json.Serialization.IValueProvider.GetValue(System.Object)">
-            <summary>
-            Gets the value.
-            </summary>
-            <param name="target">The target to get the value from.</param>
-            <returns>The value.</returns>
         </member>
         <member name="M:Newtonsoft.Json.Serialization.DynamicValueProvider.#ctor(System.Reflection.MemberInfo)">
             <summary>
@@ -9756,13 +9672,6 @@
             <summary>
             Provides data for the Error event.
             </summary>
-        </member>
-        <member name="M:Newtonsoft.Json.Serialization.ErrorEventArgs.#ctor(System.Object,Newtonsoft.Json.Serialization.ErrorContext)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Newtonsoft.Json.Serialization.ErrorEventArgs"/> class.
-            </summary>
-            <param name="currentObject">The current object.</param>
-            <param name="errorContext">The error context.</param>
         </member>
         <member name="P:Newtonsoft.Json.Serialization.ErrorEventArgs.CurrentObject">
             <summary>
@@ -10119,17 +10028,11 @@
             Contract details for a <see cref="T:System.Type"/> used by the <see cref="T:Newtonsoft.Json.JsonSerializer"/>.
             </summary>
         </member>
-        <member name="M:Newtonsoft.Json.Serialization.JsonDictionaryContract.#ctor(System.Type)">
+        <member name="P:Newtonsoft.Json.Serialization.JsonDictionaryContract.DictionaryKeyResolver">
             <summary>
-            Initializes a new instance of the <see cref="T:Newtonsoft.Json.Serialization.JsonDictionaryContract"/> class.
+            Gets or sets the dictionary key resolver.
             </summary>
-            <param name="underlyingType">The underlying type for the contract.</param>
-        </member>
-        <member name="P:Newtonsoft.Json.Serialization.JsonDictionaryContract.PropertyNameResolver">
-            <summary>
-            Gets or sets the property name resolver.
-            </summary>
-            <value>The property name resolver.</value>
+            <value>The dictionary key resolver.</value>
         </member>
         <member name="P:Newtonsoft.Json.Serialization.JsonDictionaryContract.DictionaryKeyType">
             <summary>
@@ -10201,12 +10104,6 @@
             </summary>
             <param name="underlyingType">The underlying type for the contract.</param>
         </member>
-        <member name="P:Newtonsoft.Json.Serialization.JsonISerializableContract.ISerializableCreator">
-            <summary>
-            Gets or sets the ISerializable object constructor.
-            </summary>
-            <value>The ISerializable object constructor.</value>
-        </member>
         <member name="T:Newtonsoft.Json.Serialization.JsonLinqContract">
             <summary>
             Contract details for a <see cref="T:System.Type"/> used by the <see cref="T:Newtonsoft.Json.JsonSerializer"/>.
@@ -10222,12 +10119,6 @@
             <summary>
             Contract details for a <see cref="T:System.Type"/> used by the <see cref="T:Newtonsoft.Json.JsonSerializer"/>.
             </summary>
-        </member>
-        <member name="M:Newtonsoft.Json.Serialization.JsonObjectContract.#ctor(System.Type)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Newtonsoft.Json.Serialization.JsonObjectContract"/> class.
-            </summary>
-            <param name="underlyingType">The underlying type for the contract.</param>
         </member>
         <member name="P:Newtonsoft.Json.Serialization.JsonObjectContract.MemberSerialization">
             <summary>
@@ -10309,14 +10200,6 @@
             <summary>
             Maps a JSON property to a .NET member or constructor parameter.
             </summary>
-        </member>
-        <member name="M:Newtonsoft.Json.Serialization.JsonProperty.ToString">
-            <summary>
-            Returns a <see cref="T:System.String"/> that represents this instance.
-            </summary>
-            <returns>
-            A <see cref="T:System.String"/> that represents this instance.
-            </returns>
         </member>
         <member name="P:Newtonsoft.Json.Serialization.JsonProperty.PropertyName">
             <summary>
@@ -10854,16 +10737,6 @@
             <param name="initial">The list to add to.</param>
             <param name="collection">The collection of elements to add.</param>
         </member>
-        <member name="M:Newtonsoft.Json.Utilities.CollectionUtils.IndexOf``1(System.Collections.Generic.IEnumerable{``0},``0,System.Collections.Generic.IEqualityComparer{``0})">
-            <summary>
-            Returns the index of the first occurrence in a sequence by using a specified IEqualityComparer.
-            </summary>
-            <typeparam name="TSource">The type of the elements of source.</typeparam>
-            <param name="list">A sequence in which to locate a value.</param>
-            <param name="value">The object to locate in the sequence</param>
-            <param name="comparer">An equality comparer to compare values.</param>
-            <returns>The zero-based index of the first occurrence of value within the entire sequence, if found; otherwise, –1.</returns>
-        </member>
         <member name="M:Newtonsoft.Json.Utilities.ConvertUtils.ConvertOrCast(System.Object,System.Globalization.CultureInfo,System.Type)">
             <summary>
             Converts the value to the specified type. If the value is unable to be converted, the
@@ -10993,13 +10866,6 @@
             	<c>true</c> if the string is all white space; otherwise, <c>false</c>.
             </returns>
         </member>
-        <member name="M:Newtonsoft.Json.Utilities.StringUtils.NullEmptyString(System.String)">
-            <summary>
-            Nulls an empty string.
-            </summary>
-            <param name="s">The string.</param>
-            <returns>Null if the string was null, otherwise the string unchanged.</returns>
-        </member>
         <member name="T:Newtonsoft.Json.WriteState">
             <summary>
             Specifies the state of the <see cref="T:Newtonsoft.Json.JsonWriter"/>.
@@ -11019,7 +10885,7 @@
         </member>
         <member name="F:Newtonsoft.Json.WriteState.Object">
             <summary>
-            An object is being written.
+            An object is being written. 
             </summary>
         </member>
         <member name="F:Newtonsoft.Json.WriteState.Array">
