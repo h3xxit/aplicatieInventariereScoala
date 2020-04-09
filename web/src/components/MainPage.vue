@@ -7,28 +7,30 @@
 </template>
 
 <script>
-import { db } from '@/firebase/db.js';
+
+import { db } from "@/firebase/db.js";
 
 export default {
   name: 'MainPage',
   data() {
     return {
-      info: null,
-      objects: [],
-      objectsBySchool: [],
-      school: String,
-      id: Number
+      item: {
+        name: String,
+        room: Number
+      },
+      id: Number,
+      school: String
     }
-  }, 
+  },
   created() {
-    school = this.$router.params.school;
-    id = this.$router.params.id;
+    this.school = this.$route.params.school;
+    console.log(school)
+    this.id = this.$route.params.id;
+    console.log(id)
   },
   firebase: {
-    objects: db.ref('Objects'),
-    objectsBySchool: objects.equalTo(school),
-    info: objectsBySchool.equalTo(id).toJSON(),
-  },
+    item: db.ref('Objects').child(school).child(id)
+  }
 }
 </script>
 
