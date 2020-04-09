@@ -18,6 +18,9 @@ namespace Aplicatie_Inventariere.Properties
     {
 
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
+        internal string token_txt;
+        internal string refresh_token_txt;
+        internal string email_txt;
 
         public static Settings Default
         {
