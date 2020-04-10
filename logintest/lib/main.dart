@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'signup.dart';
+//import 'signup.dart';
 //import 'package:logintest/pages/homepage.dart';
 import 'package:logintest/sidebar/sidebar_layout.dart';
+import 'package:logintest/pages/signup.dart';
+import 'package:logintest/loginstuff/authentication.dart';
+import 'package:logintest/pages/rootpage.dart';
 
 void main() => runApp(MyApp());
 
@@ -11,12 +14,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-          scaffoldBackgroundColor: Colors.white, 
-          primaryColor: Colors.white
-      ),
-      home: SideBarLayout(),
-      //home: LoginPage(),
+      home: new RootPage(auth: new Auth()),
     );
   }
 }
+
