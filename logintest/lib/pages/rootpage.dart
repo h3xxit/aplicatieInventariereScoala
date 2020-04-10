@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:logintest/pages/signup.dart';
 import 'package:logintest/loginstuff/authentication.dart';
-import 'package:logintest/pages/homepage.dart';
+import 'package:logintest/sidebar/sidebar_layout.dart';
 
 enum AuthStatus {
   NOT_DETERMINED,
@@ -77,7 +77,7 @@ class _RootPageState extends State<RootPage> {
         break;
       case AuthStatus.LOGGED_IN:
         if (_userId.length > 0 && _userId != null) {
-          return new HomePage(
+          return new SideBarLayout(
           );
         } else
           return buildWaitingScreen();
