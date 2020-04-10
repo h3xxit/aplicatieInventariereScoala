@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'signup.dart';
+import 'package:logintest/pages/signup.dart';
+import 'package:logintest/loginstuff/authentication.dart';
+import 'package:logintest/pages/rootpage.dart';
 
 void main() => runApp(MyApp());
 
@@ -9,7 +11,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginPage(),
+      home: new RootPage(auth: new Auth()),
     );
   }
 }
