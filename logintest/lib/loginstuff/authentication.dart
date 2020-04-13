@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:logintest/pages/signup.dart';
 
 abstract class BaseAuth {
   Future<String> signIn(String email, String password);
@@ -37,8 +38,11 @@ class Auth implements BaseAuth {
     return user;
   }
 
-  Future<void> signOut() async {
-    return _firebaseAuth.signOut();
+  Future<LoginPage> signOut() async {
+    //return _firebaseAuth.signOut();
+    await FirebaseAuth.instance.signOut();
+
+    return new LoginPage();
   }
 
   Future<void> sendEmailVerification() async {

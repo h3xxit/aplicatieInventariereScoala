@@ -142,6 +142,10 @@ class _SideBarState extends State<SideBar>
                         MenuItem(
                           icon: Icons.exit_to_app,
                           title: "Logout",
+                          onTap: (){
+                            onIconPressed();
+                            BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.LogOutClickedEvent);
+                          },
                         ),
                       ],
                     )),
