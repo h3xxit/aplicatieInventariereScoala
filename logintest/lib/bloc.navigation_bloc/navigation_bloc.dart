@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:logintest/pages/homepage.dart';
@@ -7,6 +10,7 @@ import 'package:logintest/pages/inventory.dart';
 import 'package:logintest/loginstuff/authentication.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:logintest/pages/signup.dart';
+import 'package:logintest/dialogs/dialogs.dart';
 
 enum NavigationEvents {
   HomePageClickedEvent, 
@@ -34,6 +38,7 @@ class NavigationBloc extends Bloc<NavigationEvents, NavigationStates>{
           yield InventoryPage();
           break;
         case NavigationEvents.LogOutClickedEvent: 
+          //showAlertDialog(context);
           FirebaseAuth.instance.signOut();
           //FirebaseUser user = FirebaseAuth.instance.currentUser;
           runApp(

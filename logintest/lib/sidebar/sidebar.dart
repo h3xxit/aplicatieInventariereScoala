@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logintest/bloc.navigation_bloc/navigation_bloc.dart';
+//import 'package:logintest/dialogs/dialogs.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:logintest/sidebar/menu_item.dart';
 
@@ -143,8 +144,9 @@ class _SideBarState extends State<SideBar>
                           icon: Icons.exit_to_app,
                           title: "Logout",
                           onTap: (){
-                            onIconPressed();
-                            BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.LogOutClickedEvent);
+                            showAlertDialog(context);
+                            //onIconPressed();
+                            //BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.LogOutClickedEvent);
                           },
                         ),
                       ],
@@ -179,6 +181,40 @@ class _SideBarState extends State<SideBar>
       },
     );
   }
+
+  showAlertDialog(BuildContext context) {
+  Widget cancelButton = FlatButton(
+    child: Text("NU"),
+    onPressed: () {
+      Navigator.pop(context);
+    },
+  );
+  Widget continueButton = FlatButton(
+    child: Text("DA"),
+    onPressed: () {
+      Navigator.pop(context);
+      onIconPressed();
+       BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.LogOutClickedEvent);
+    },
+  );
+
+  AlertDialog alert = AlertDialog(
+    title: Text("Sigur?"),
+    content: Text(
+        "Daca sunteti sigur/a ca doriti sa iesiti din cont, apasati butonul 'DA', altfel apasati pe 'NU'!"),
+    actions: [
+      cancelButton,
+      continueButton,
+    ],
+  );
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
+
 }
 
 class CustomMenuClipper extends CustomClipper<Path>{
@@ -206,5 +242,6 @@ class CustomMenuClipper extends CustomClipper<Path>{
     // TODO: implement shouldReclip
     return true;
   }
-  
 }
+
+
