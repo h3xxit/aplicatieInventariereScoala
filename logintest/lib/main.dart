@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-//import 'signup.dart';
-//import 'package:logintest/pages/homepage.dart';
-import 'package:logintest/sidebar/sidebar_layout.dart';
-import 'package:logintest/pages/signup.dart';
 import 'package:logintest/loginstuff/authentication.dart';
 import 'package:logintest/pages/rootpage.dart';
 

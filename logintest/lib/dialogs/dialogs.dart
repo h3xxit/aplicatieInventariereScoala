@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:logintest/sidebar/sidebar.dart';
 
 showAlertDialog(BuildContext context) {
   Widget cancelButton = FlatButton(
