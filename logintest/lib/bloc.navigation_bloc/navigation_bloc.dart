@@ -35,9 +35,7 @@ class NavigationBloc extends Bloc<NavigationEvents, NavigationStates>{
           yield InventoryPage();
           break;
         case NavigationEvents.LogOutClickedEvent: 
-          //showAlertDialog(context);
           FirebaseAuth.instance.signOut();
-          //FirebaseUser user = FirebaseAuth.instance.currentUser;
           runApp(
             new MaterialApp(
               home: new RootPage(auth: new Auth()),

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:logintest/pages/qrcodedata.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -34,22 +35,19 @@ class _ScanState extends State<ScanScreen> {
                     onPressed: scan,
                     child: const Text('Scaneaza cod QR!')
                 ),
-              )
-              ,
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                child: Text(barcode, textAlign: TextAlign.center,),
-              )
-              ,
+              ),
             ],
           ),
         ));
   }
 
+  
+
   Future scan() async {
     try {
       String barcode = await scanner.scan();
       setState(() => this.barcode = barcode);
+      Navigator.push(context, MaterialPageRoute(builder: (context)=> QrData(barcode)));
     } on PlatformException catch (e) {
       if (e.code == scanner.CameraAccessDenied) {
         setState(() {
