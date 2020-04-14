@@ -38,6 +38,10 @@ class Auth implements BaseAuth {
     return user;
   }
 
+  Future<void> resetPassword(String email) async {
+    await _firebaseAuth.sendPasswordResetEmail(email: email);
+  }
+
   Future<LoginPage> signOut() async {
     //return _firebaseAuth.signOut();
     await FirebaseAuth.instance.signOut();

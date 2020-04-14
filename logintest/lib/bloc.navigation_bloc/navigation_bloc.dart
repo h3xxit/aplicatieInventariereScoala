@@ -39,7 +39,7 @@ class NavigationBloc extends Bloc<NavigationEvents, NavigationStates>{
           break;
         case NavigationEvents.LogOutClickedEvent: 
           //showAlertDialog(context);
-          FirebaseAuth.instance.signOut();
+          //await FirebaseAuth.instance.signOut();
           //FirebaseUser user = FirebaseAuth.instance.currentUser;
           runApp(
             new MaterialApp(

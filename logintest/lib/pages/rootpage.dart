@@ -77,9 +77,9 @@ class _RootPageState extends State<RootPage> {
         break;
       case AuthStatus.LOGGED_IN:
         if (_userId.length > 0 && _userId != null) {
-          return new SideBarLayout(
-          );
-        } else
+          return new SideBarLayout();
+        }
+       else
           return buildWaitingScreen();
         break;
       default:
