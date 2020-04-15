@@ -20,6 +20,9 @@ class _ScanState extends State<ScanScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: new AppBar(
+          title: new Text('QR Code Scanner'),
+        ),
         body: new Center(
           child: new Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -28,11 +31,11 @@ class _ScanState extends State<ScanScreen> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                 child: RaisedButton(
-                    color: Colors.yellow[700],
-                    textColor: Colors.deepOrange[700],
-                    splashColor: Colors.yellowAccent,
+                    color: Colors.blue,
+                    textColor: Colors.white,
+                    splashColor: Colors.blueGrey,
                     onPressed: scan,
-                    child: const Text('Scaneaza cod QR!')
+                    child: const Text('START CAMERA SCAN')
                 ),
               )
               ,
