@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:logintest/bloc.navigation_bloc/navigation_bloc.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:logintest/main.dart';
 
 class QrData extends StatelessWidget{
  
@@ -55,6 +53,7 @@ class QrData extends StatelessWidget{
     return new Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.yellow[700],
+          title: new Text("Informatii obiect"),
         ),
       body: new ListView(
         shrinkWrap: true,

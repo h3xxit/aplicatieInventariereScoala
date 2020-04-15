@@ -6,7 +6,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logintest/bloc.navigation_bloc/navigation_bloc.dart';
-import 'package:logintest/pages/signup.dart';
 //import 'package:logintest/dialogs/dialogs.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:logintest/sidebar/menu_item.dart';
