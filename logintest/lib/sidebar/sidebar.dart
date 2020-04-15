@@ -2,12 +2,15 @@
 
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logintest/bloc.navigation_bloc/navigation_bloc.dart';
 //import 'package:logintest/dialogs/dialogs.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:logintest/sidebar/menu_item.dart';
+import 'package:logintest/pages/rootpage.dart';
+import 'package:logintest/loginstuff/authentication.dart';
 
 class SideBar extends StatefulWidget {
   @override
@@ -20,6 +23,9 @@ class _SideBarState extends State<SideBar>
   StreamController<bool> sidebarIsOpenedStreamController;
   Stream<bool> sidebarIsOpenedStream;
   StreamSink<bool> sidebarIsOpenedStreamSink;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  //final VoidCallback _loginCallback =FirebaseAuth.instance;
+  FirebaseUser user;
   //final bool sidebarIsOpened = false;
   final _animationDuration = const Duration(milliseconds: 500);
 
@@ -31,8 +37,13 @@ class _SideBarState extends State<SideBar>
     sidebarIsOpenedStreamController = PublishSubject<bool>();
     sidebarIsOpenedStream = sidebarIsOpenedStreamController.stream;
     sidebarIsOpenedStreamSink = sidebarIsOpenedStreamController.sink;
+    initUser();
   }
 
+  initUser() async{
+    user = await _auth.currentUser();
+    setState(() {});
+  }
   @override
   void dispose() {
     _animationController.dispose();
@@ -81,14 +92,14 @@ class _SideBarState extends State<SideBar>
                         ),
                         ListTile(
                           title: Text(
-                            "Ana Maria Pintiliciuc",
+                            "${user?.displayName}",
                             style: TextStyle(
                                 color: Colors.deepOrange[700],
                                 fontSize: 30,
                                 fontWeight: FontWeight.w800),
                           ),
                           subtitle: Text(
-                            "mail@gmail.com",
+                            "${user?.email}",
                             style: TextStyle(
                               color: Colors.amber[900],
                               fontSize: 20,
@@ -191,10 +202,13 @@ class _SideBarState extends State<SideBar>
   );
   Widget continueButton = FlatButton(
     child: Text("DA"),
-    onPressed: () {
+    onPressed: () async{
       Navigator.pop(context);
-      onIconPressed();
-       BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.LogOutClickedEvent);
+      await _auth.signOut();
+      Navigator.push(context, MaterialPageRoute(builder: (context)=> RootPage(auth: new Auth())));
+      //return await _auth.signOut();
+      //onIconPressed();
+      // BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.LogOutClickedEvent);
     },
   );
 
@@ -239,7 +253,6 @@ class CustomMenuClipper extends CustomClipper<Path>{
 
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) {
-    // TODO: implement shouldReclip
     return true;
   }
 }

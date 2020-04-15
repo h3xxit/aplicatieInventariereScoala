@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:logintest/loginstuff/authentication.dart';
 
 class LoginPage extends StatefulWidget{
@@ -71,9 +70,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget showText(String word, double a, double b, Color colour){
-    return new Hero(
-      tag: 'hero',
-      child: Padding(
+    return new Padding(
         padding: EdgeInsets.fromLTRB(a, b, 0.0, 0.0),
         child: new Text(
           word,
@@ -83,7 +80,6 @@ class _LoginPageState extends State<LoginPage> {
           color: colour,
           )
           ),
-        ),
       );
   }
 

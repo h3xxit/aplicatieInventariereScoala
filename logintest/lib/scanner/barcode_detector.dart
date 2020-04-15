@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:logintest/pages/qrcodedata.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -20,9 +21,6 @@ class _ScanState extends State<ScanScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: new AppBar(
-          title: new Text('QR Code Scanner'),
-        ),
         body: new Center(
           child: new Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -31,28 +29,34 @@ class _ScanState extends State<ScanScreen> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                 child: RaisedButton(
-                    color: Colors.blue,
-                    textColor: Colors.white,
-                    splashColor: Colors.blueGrey,
+                    elevation: 5.0,
+                    shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(30.0)
+                    ),
+                    color: Colors.yellow[700],
                     onPressed: scan,
-                    child: const Text('START CAMERA SCAN')
+                    child: new Text(
+                      'Scaneaza cod QR!',
+                    style: new TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Montserrat',
+                    ),
+                  ),
                 ),
-              )
-              ,
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                child: Text(barcode, textAlign: TextAlign.center,),
-              )
-              ,
+              ),
             ],
           ),
         ));
   }
 
+  
+
   Future scan() async {
     try {
       String barcode = await scanner.scan();
       setState(() => this.barcode = barcode);
+      Navigator.push(context, MaterialPageRoute(builder: (context)=> QrData(barcode)));
     } on PlatformException catch (e) {
       if (e.code == scanner.CameraAccessDenied) {
         setState(() {
