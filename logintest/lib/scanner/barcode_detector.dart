@@ -4,8 +4,9 @@ import 'package:logintest/pages/qrcodedata.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:logintest/bloc.navigation_bloc/navigation_bloc.dart';
 
-class ScanScreen extends StatefulWidget {
+class ScanScreen extends StatefulWidget with NavigationStates{
   @override
   _ScanState createState() => new _ScanState();
 }

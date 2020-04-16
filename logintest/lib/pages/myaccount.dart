@@ -101,6 +101,45 @@ class MyAccountPage extends StatelessWidget with NavigationStates {
     nameTxt.text = user.displayName;
   }
 
+  showAlertDialog(BuildContext context) {
+        Widget cancelButton = FlatButton(
+          child: Text("NU"),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        );
+        Widget continueButton = FlatButton(
+          child: Text("DA"),
+          onPressed: () async{
+            Navigator.pop(context);
+            await _auth.sendPasswordResetEmail(email: user.email);
+            //Navigator.push(context, MaterialPageRoute(builder: (context)=> SideBarLayout()));
+          },
+        );
+
+        AlertDialog alert = AlertDialog(
+          title: Text("Sigur?"),
+          content: Text(
+              "Daca sunteti sigur/a ca doriti sa stergeti obiectul, apasati butonul 'DA', altfel apasati pe 'NU'!"),
+          actions: [
+            cancelButton,
+            continueButton,
+          ],
+        );
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return alert;
+          },
+        );
+    }
+
+    void updateData(){
+      databaseReference.child("Teachers/" + user.email.replaceAll('.', ',')).update({
+        "Name": nameTxt.text
+      });
+    }
+
   @override
   Widget build(BuildContext context) {
     initUser();
@@ -136,20 +175,30 @@ class MyAccountPage extends StatelessWidget with NavigationStates {
           SizedBox(
             height: 30,
           ),
-          TextField(
-            onEditingComplete: () {
+          Padding( 
+            padding: const EdgeInsets.fromLTRB(50.0, 0.0, 50.0, 0.0),
+            child: TextField(
+            /*onEditingComplete: () {
               databaseReference
                   .child("Teachers/" + user.email.replaceAll('.', ','))
                   .update({"Name": nameTxt.text});
-            },
+            },*/
             controller: nameTxt,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                color: Colors.deepOrange[700],
-                fontSize: 30,
-                fontWeight: FontWeight.w700),
-              decoration: InputDecoration(
-              border: InputBorder.none,
+            maxLines: 1,
+            keyboardType: TextInputType.emailAddress,
+            autofocus: false,
+            decoration: InputDecoration(
+              //border: InputBorder.none,
+              //hintText: 'Nume vechi: ' + _name,
+              labelText: 'Introduceti nume:',
+              labelStyle: TextStyle(
+                fontFamily: 'Montserrat',
+                fontWeight: FontWeight.bold,
+                color: Colors.grey,
+              ),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.yellow[700])
+              ),
             ),
             /*decoration: new InputDecoration(
             focusedBorder: OutlineInputBorder(
@@ -171,21 +220,20 @@ class MyAccountPage extends StatelessWidget with NavigationStates {
                           indent: 32,
                           endIndent: 32,
         ),*/*/
+            ),
           ),
-          Divider(
+          /*Divider(
             height: 64.0,
             thickness: 0.5,
             color: Colors.amber[900],
             indent: 32,
             endIndent: 32,
-          ),
+          ),*/
           SizedBox(
             height: 70,
           ),
           FlatButton(
-            onPressed: () {
-              _auth.sendPasswordResetEmail(email: user.email);
-            },
+            onPressed: () => showAlertDialog(context), 
             child: Text(
               "Schimbare Parola",
               style: TextStyle(
@@ -194,7 +242,21 @@ class MyAccountPage extends StatelessWidget with NavigationStates {
                 fontWeight: FontWeight.w500,
               ),
             ),
-          )
+          ),
+          /*SizedBox(
+            height: 25,
+          ),*/
+          FlatButton(
+            onPressed: () => updateData(), 
+            child: Text(
+              "Salvare Nume",
+              style: TextStyle(
+                color: Colors.deepOrange[700],
+                fontSize: 20,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
           /*ListTile(
 
         title: Text(
@@ -217,5 +279,7 @@ class MyAccountPage extends StatelessWidget with NavigationStates {
             // "Contul Meu",
             //style: TextStyle(fontWeight: FontWeight.w900, fontSize: 28),
             ));
+
+      
   }
 }
