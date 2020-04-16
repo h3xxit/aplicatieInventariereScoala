@@ -74,18 +74,15 @@ class _SideBarState extends State<SideBar>
     if (isAnimationCompleted) {
       sidebarIsOpenedStreamSink.add(false);
       _animationController.reverse();
-      _isSideBarOpen = false;
     } else {
       sidebarIsOpenedStreamSink.add(true);
       _animationController.forward();
-      _isSideBarOpen = true;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    //TODO: not working(close keyboard)
-    if(_animationController.status == AnimationStatus.forward)
+    if(_isSideBarOpen)
       FocusScope.of(context).unfocus();
     final screenWidth = MediaQuery.of(context).size.width;
 
@@ -99,6 +96,14 @@ class _SideBarState extends State<SideBar>
           bottom: 0,
           left: sidebarIsOpenedAsync.data ? 0 : -screenWidth,
           right: sidebarIsOpenedAsync.data ? 0 : screenWidth - 35,
+          onEnd: () {
+            if(sidebarIsOpenedAsync.data){
+              _isSideBarOpen = true;
+              FocusScope.of(context).unfocus();
+            }
+            else
+              _isSideBarOpen = false;
+          },
           child: new Row(
             children: <Widget>[
               Expanded(
