@@ -98,7 +98,6 @@ class MyAccountPage extends StatelessWidget with NavigationStates {
       Map<dynamic, dynamic> map = snapshot.value;
       nameTxt.text = map['Name'].toString();
     });
-    nameTxt.text = user.displayName;
   }
 
   @override

@@ -160,7 +160,7 @@ class _SideBarState extends State<SideBar>
                         ),
                         MenuItem(
                           icon: Icons.format_list_bulleted,
-                          title: "Inventar",
+                          title: "Adaugati obiect",
                           onTap: (){
                             onIconPressed();
                             BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.InventoryClickedEvent);
