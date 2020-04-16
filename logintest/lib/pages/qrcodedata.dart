@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:logintest/pages/homepage.dart';
+import 'package:logintest/sidebar/sidebar_layout.dart';
 import 'package:logintest/pages/modifyobject.dart';
 
 class QrData extends StatelessWidget{
@@ -131,7 +131,7 @@ class QrData extends StatelessWidget{
           onPressed: () async{
             Navigator.pop(context);
             await deleteObject();
-            Navigator.push(context, MaterialPageRoute(builder: (context)=> HomePage()));
+            Navigator.push(context, MaterialPageRoute(builder: (context)=> SideBarLayout()));
           },
         );
 
@@ -162,8 +162,13 @@ class QrData extends StatelessWidget{
 
   Widget build(BuildContext context){
     getEmailId(this._barcode);
-
-    return FutureBuilder<Map<dynamic, dynamic>>(
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.of(context).pop();
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> SideBarLayout()));
+        return true;
+      },
+      child: FutureBuilder<Map<dynamic, dynamic>>(
                   future: getData(),
                   builder: (BuildContext context, AsyncSnapshot<Map<dynamic, dynamic>> snapshot) {
                     
@@ -202,7 +207,13 @@ class QrData extends StatelessWidget{
                       appBar: AppBar(
                         backgroundColor: Colors.yellow[700],
                         title: new Text("Informatii obiect", style: TextStyle(fontFamily: 'Montserrat', fontWeight: FontWeight.w900, fontSize: 20, color:Colors.deepOrange[700])),
-                        
+                        leading: IconButton(
+                          icon: Icon(Icons.arrow_back,),
+                          onPressed: (){
+                            Navigator.of(context).pop();
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=> SideBarLayout()));
+                          },
+                        ), 
                       ),
                       body: new Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -212,7 +223,8 @@ class QrData extends StatelessWidget{
                     );
                   },
               
-          );
+          )// Your Scaffold goes here.
+    );
 
     
   }
