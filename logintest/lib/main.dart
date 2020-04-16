@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:logintest/loginstuff/authentication.dart';
 import 'package:logintest/pages/rootpage.dart';
+import 'package:logintest/pages/qrcodedata.dart';
 
 void main() => runApp(MyApp());
 

@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logintest/bloc.navigation_bloc/navigation_bloc.dart';
@@ -28,7 +29,10 @@ class _SideBarState extends State<SideBar>
   FirebaseUser user;
   //final bool sidebarIsOpened = false;
   final _animationDuration = const Duration(milliseconds: 500);
-
+  TextEditingController nameTxt = TextEditingController();
+  final databaseReference = FirebaseDatabase.instance.reference();
+  String txt = "";
+  bool _isSideBarOpen = false;
   @override
   void initState() {
     super.initState();
@@ -42,6 +46,14 @@ class _SideBarState extends State<SideBar>
 
   initUser() async{
     user = await _auth.currentUser();
+    databaseReference
+        .child('Teachers/' + user.email.replaceAll('.', ','))
+        .once()
+        .then((DataSnapshot snapshot) {
+           Map<dynamic, dynamic> map = snapshot.value;
+           nameTxt.text = map['Name'].toString();
+           txt = map['Name'].toString();
+    });
     setState(() {});
   }
   @override
@@ -55,7 +67,10 @@ class _SideBarState extends State<SideBar>
   void onIconPressed() {
     final animationStatus = _animationController.status;
     final isAnimationCompleted = animationStatus == AnimationStatus.completed;
-
+    
+    initUser();
+    //FocusScope.of(context).unfocus();
+    
     if (isAnimationCompleted) {
       sidebarIsOpenedStreamSink.add(false);
       _animationController.reverse();
@@ -67,6 +82,8 @@ class _SideBarState extends State<SideBar>
 
   @override
   Widget build(BuildContext context) {
+    if(_isSideBarOpen)
+      FocusScope.of(context).unfocus();
     final screenWidth = MediaQuery.of(context).size.width;
 
     return StreamBuilder<bool>(
@@ -79,24 +96,37 @@ class _SideBarState extends State<SideBar>
           bottom: 0,
           left: sidebarIsOpenedAsync.data ? 0 : -screenWidth,
           right: sidebarIsOpenedAsync.data ? 0 : screenWidth - 35,
-          child: Row(
+          onEnd: () {
+            if(sidebarIsOpenedAsync.data){
+              _isSideBarOpen = true;
+              FocusScope.of(context).unfocus();
+            }
+            else
+              _isSideBarOpen = false;
+          },
+          child: new Row(
             children: <Widget>[
               Expanded(
                 child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     color: Colors.yellow[700],
-                    child: Column(
+                    child: ListView(
                       children: <Widget>[
                         SizedBox(
-                          height: 70,
+                          height: 40,
                         ),
                         ListTile(
-                          title: Text(
-                            "${user?.displayName}",
+                          title: TextField(
+                            readOnly: true,
+                            controller: nameTxt,
+                            maxLines: null,
                             style: TextStyle(
                                 color: Colors.deepOrange[700],
                                 fontSize: 30,
                                 fontWeight: FontWeight.w800),
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                ),
                           ),
                           subtitle: Text(
                             "${user?.email}",
@@ -161,7 +191,8 @@ class _SideBarState extends State<SideBar>
                           },
                         ),
                       ],
-                    )),
+                    )
+                  ),
               ),
               Align(
                 alignment: Alignment(0, -0.9),
