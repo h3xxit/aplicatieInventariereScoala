@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:logintest/bloc.navigation_bloc/navigation_bloc.dart';
 /*
@@ -83,63 +84,118 @@ class _MyAccountPageState extends State<MyAccountPage> with NavigationStates{
 class MyAccountPage extends StatelessWidget with NavigationStates {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseUser user;
+  TextEditingController emailTxt = TextEditingController();
+  TextEditingController nameTxt = TextEditingController();
+  final databaseReference = FirebaseDatabase.instance.reference();
 
-  initUser() async{
+  initUser() async {
     user = await _auth.currentUser();
+    emailTxt.text = user.email;
+    databaseReference
+        .child('Teachers/' + user.email.replaceAll('.', ','))
+        .once()
+        .then((DataSnapshot snapshot) {
+      Map<dynamic, dynamic> map = snapshot.value;
+      nameTxt.text = map['Name'].toString();
+    });
+    nameTxt.text = user.displayName;
   }
+
   @override
   Widget build(BuildContext context) {
+    initUser();
     return Center(
-        child: Column(children: <Widget>[
-      SizedBox(
-        height: 100,
-      ),
-      CircleAvatar(
-          child: Icon(
-            Icons.perm_identity,
-            color: Colors.white,
+        child: ListView(
+            //crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+          SizedBox(
+            height: 100,
           ),
-          radius: 50,
-        ),
-       SizedBox(
-        height: 30,
-      ),
-        Text(
-          "mailymail",
-          style: TextStyle(
-              color: Colors.amber[900],
-              fontSize: 20,
-              fontWeight: FontWeight.w500),
-        ),
-         SizedBox(
-        height: 30,
-      ),
-        Text(
-          "Ana Maria Pintiliciuc",
-          style: TextStyle(
-              color: Colors.deepOrange[700],
-              fontSize: 30,
-              fontWeight: FontWeight.w800),
-        ),
-
-        SizedBox(
-        height: 60,
-      ),
-      FlatButton(
-        onPressed: () async {
-            await initUser();
-            _auth.sendPasswordResetEmail(email:user.email);
-        },
-        child: Text(
-          "Schimbare Parola", 
-          style: TextStyle(
-            color: Colors.deepOrange[700],
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
+          CircleAvatar(
+            child: Icon(
+              Icons.perm_identity,
+              color: Colors.white,
+            ),
+            radius: 50,
           ),
-        ),
-      )
-      /*ListTile(
+          SizedBox(
+            height: 30,
+          ),
+          TextField(
+            readOnly: true,
+            controller: emailTxt,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: Colors.amber[900],
+                fontSize: 20,
+                fontWeight: FontWeight.w500),
+            decoration: InputDecoration(
+              border: InputBorder.none,
+            ),
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          TextField(
+            onEditingComplete: () {
+              databaseReference
+                  .child("Teachers/" + user.email.replaceAll('.', ','))
+                  .update({"Name": nameTxt.text});
+            },
+            controller: nameTxt,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: Colors.deepOrange[700],
+                fontSize: 30,
+                fontWeight: FontWeight.w700),
+              decoration: InputDecoration(
+              border: InputBorder.none,
+            ),
+            /*decoration: new InputDecoration(
+            focusedBorder: OutlineInputBorder(
+               borderSide: BorderSide(
+                 color: Colors.amber[900], 
+                
+                // width: 5.0
+                ),            
+              ),
+                /*enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: 
+                  Colors.yellow[700], 
+                  //width: 5.0
+                ),*/
+              ),
+         ),
+       /* decoration: InputDecoration(
+          border:  color: Colors.amber[900],
+                          indent: 32,
+                          endIndent: 32,
+        ),*/*/
+          ),
+          Divider(
+            height: 64.0,
+            thickness: 0.5,
+            color: Colors.amber[900],
+            indent: 32,
+            endIndent: 32,
+          ),
+          SizedBox(
+            height: 70,
+          ),
+          FlatButton(
+            onPressed: () {
+              _auth.sendPasswordResetEmail(email: user.email);
+            },
+            child: Text(
+              "Schimbare Parola",
+              style: TextStyle(
+                color: Colors.deepOrange[700],
+                fontSize: 20,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          )
+          /*ListTile(
 
         title: Text(
           "Ana Maria Pintiliciuc",
@@ -156,7 +212,7 @@ class MyAccountPage extends StatelessWidget with NavigationStates {
           radius: 40,
         ),
       ),*/
-    ]
+        ]
             //child: Text(
             // "Contul Meu",
             //style: TextStyle(fontWeight: FontWeight.w900, fontSize: 28),
