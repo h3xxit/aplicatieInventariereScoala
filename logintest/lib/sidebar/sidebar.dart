@@ -115,7 +115,7 @@ class _SideBarState extends State<SideBar>
                         SizedBox(
                           height: 40,
                         ),
-                        ListTile(
+                        /*ListTile(
                           title: TextField(
                             readOnly: true,
                             controller: nameTxt,
@@ -123,17 +123,11 @@ class _SideBarState extends State<SideBar>
                             style: TextStyle(
                                 color: Colors.deepOrange[700],
                                 fontSize: 30,
+                                fontFamily: 'Montserrat',
                                 fontWeight: FontWeight.w800),
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
                                 ),
-                          ),
-                          subtitle: Text(
-                            "${user?.email}",
-                            style: TextStyle(
-                              color: Colors.amber[900],
-                              fontSize: 20,
-                            ),
                           ),
                           leading: CircleAvatar(
                             child: Icon(
@@ -142,7 +136,46 @@ class _SideBarState extends State<SideBar>
                             ),
                             radius: 40,
                           ),
+                          //subtitle: Text(" "),
+                        ),*/
+                        Center(
+                            child: CircleAvatar(
+                            child: Icon(
+                              Icons.perm_identity,
+                              color: Colors.white,
+                            ),
+                            radius: 40,
+                          ),
                         ),
+                        TextField(
+                          readOnly: true,
+                          controller: nameTxt,
+                          maxLines: null,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: Colors.deepOrange[700],
+                              //fontSize: 30,
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w800),
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                              ),
+                        ),
+                        Center
+                        (   
+                            child: FittedBox(
+                              fit: BoxFit.fitWidth,
+                              child: Text(
+                                "${user?.email}",
+                                style: TextStyle(
+                                  color: Colors.amber[900],
+                                  //fontSize: 20,
+                                  fontFamily: 'Montserrat',
+                                ),
+                              ),
+                            ),
+                        ),
+                        
                         Divider(
                           height: 64.0,
                           thickness: 0.5,
@@ -159,7 +192,7 @@ class _SideBarState extends State<SideBar>
                           },
                         ),
                         MenuItem(
-                          icon: Icons.format_list_bulleted,
+                          icon: Icons.playlist_add,
                           title: "Adaugati obiect",
                           onTap: (){
                             onIconPressed();
@@ -226,13 +259,13 @@ class _SideBarState extends State<SideBar>
 
   showAlertDialog(BuildContext context) {
   Widget cancelButton = FlatButton(
-    child: Text("NU"),
+    child: Text("NU", style: new TextStyle(fontFamily: 'Montserrat'),),
     onPressed: () {
       Navigator.pop(context);
     },
   );
   Widget continueButton = FlatButton(
-    child: Text("DA"),
+    child: Text("DA", style: new TextStyle(fontFamily: 'Montserrat'),),
     onPressed: () async{
       Navigator.pop(context);
       await _auth.signOut();
@@ -244,9 +277,10 @@ class _SideBarState extends State<SideBar>
   );
 
   AlertDialog alert = AlertDialog(
-    title: Text("Sigur?"),
+    title: Text("Sigur?", style: new TextStyle(fontFamily: 'Montserrat'),),
     content: Text(
-        "Daca sunteti sigur/a ca doriti sa iesiti din cont, apasati butonul 'DA', altfel apasati pe 'NU'!"),
+        "Daca sunteti sigur/a ca doriti sa iesiti din cont, apasati butonul 'DA', altfel apasati pe 'NU'!",
+        style: new TextStyle(fontFamily: 'Montserrat'),),
     actions: [
       cancelButton,
       continueButton,

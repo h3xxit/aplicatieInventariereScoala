@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:logintest/loginstuff/authentication.dart';
+import 'package:toast/toast.dart';
 
 class LoginPage extends StatefulWidget{
 
@@ -17,8 +18,8 @@ class LoginPage extends StatefulWidget{
 
 class _LoginPageState extends State<LoginPage> {
 
-  bool _isLoading;
-  String _email, _password, _errorMessage;
+  bool _isLoading=false;
+  String _email, _password, _errorMessage="";
   final _formKey = new GlobalKey<FormState>();
 
    bool validateAndSave() {
@@ -27,6 +28,7 @@ class _LoginPageState extends State<LoginPage> {
       form.save();
       return true;
     }
+    
     return false;
   }
 
@@ -50,6 +52,7 @@ class _LoginPageState extends State<LoginPage> {
         }
       } catch (e) {
         print('Error: $e');
+        Toast.show("Email/Parola incorecte!", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
         setState(() {
           _isLoading = false;
           _errorMessage = e.message;
@@ -61,7 +64,12 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget showCircularProgress(){
     if(_isLoading){
-      return Center(child: CircularProgressIndicator());
+      return Center(child: new CircularProgressIndicator(
+                              value: null,
+                              strokeWidth: 7.0,
+                              valueColor: new AlwaysStoppedAnimation<Color>(Colors.deepOrange[700]),
+                            ),
+                          );
     }
     return Container(
         height: 0.0,
@@ -77,10 +85,33 @@ class _LoginPageState extends State<LoginPage> {
           style: TextStyle(
           fontSize: 80.0,
           fontWeight: FontWeight.bold,
+          fontFamily: 'Montserrat',
           color: colour,
           )
           ),
       );
+  }
+
+  String validate(String value, String text){
+    if(value.isEmpty){
+      setState((){
+        _isLoading=false;
+      });
+      
+      return 'Va rugam introduceti' + text;
+
+    } else {
+
+      if(text==" emailul" && (!value.contains("@") || !value.contains("."))){
+        setState((){
+        _isLoading=false;
+        });
+
+        return "Va rugam introduceti un email valid";
+      }
+
+      return null;
+    }
   }
 
   Widget showEmailInput(){
@@ -90,18 +121,23 @@ class _LoginPageState extends State<LoginPage> {
         maxLines: 1,
         keyboardType: TextInputType.emailAddress,
         autofocus: false,
+        style: TextStyle(
+                color: Colors.deepOrange[700],
+                fontFamily: 'Montserrat',
+                //fontSize: 20,
+                fontWeight: FontWeight.w500),
         decoration: InputDecoration(
           labelText: 'EMAIL',
           labelStyle: TextStyle(
             fontFamily: 'Montserrat',
             fontWeight: FontWeight.bold,
-            color: Colors.grey,
+            color: Colors.amber[900],
           ),
           focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.yellow[700])
           ),
         ),
-        validator: (value) => value.isEmpty ? 'Va rugam introduceti mailul!' : null,
+        validator: (value) => validate(value, " emailul"),
         onSaved: (value) => _email = value.trim(),
       ),
     );
@@ -114,18 +150,23 @@ class _LoginPageState extends State<LoginPage> {
         maxLines: 1,
         obscureText: true,
         autofocus: false,
+        style: TextStyle(
+                color: Colors.deepOrange[700],
+                fontFamily: 'Montserrat',
+                //fontSize: 20,
+                fontWeight: FontWeight.w500),
         decoration: InputDecoration(
           labelText: 'PASSWORD',
           labelStyle: TextStyle(
             fontFamily: 'Montserrat',
             fontWeight: FontWeight.bold,
-            color: Colors.grey,
+            color: Colors.amber[900],
           ),
           focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.yellow[700])
           ),
         ),
-        validator: (value) => value.isEmpty ? 'Va rugam introduceti parola!' : null,
+        validator: (value) => validate(value, " parola"),
         onSaved: (value) => _password = value.trim(),
       ),
     );
@@ -145,7 +186,7 @@ class _LoginPageState extends State<LoginPage> {
           child: new Text(
               'Intra in cont!',
               style: new TextStyle(
-                color: Colors.black,
+                color: Colors.deepOrange[700],
                 fontWeight: FontWeight.bold,
                 fontFamily: 'Montserrat',
               ),
@@ -185,8 +226,8 @@ class _LoginPageState extends State<LoginPage> {
         child: new ListView(
           shrinkWrap: true,
           children: <Widget>[
-            showText('Buna', 0.0, 0.0, Colors.black),
-            showText('Ziua!', 15.0, 0.0, Colors.black),
+            showText('Buna', 0.0, 0.0, Colors.amber[900]),
+            showText('Ziua!', 15.0, 0.0, Colors.yellow[700]),
             //showText('!', 190.0, 0.0, Colors.yellow[700]),
             showEmailInput(),
             showPasswordInput(),
@@ -202,14 +243,21 @@ class _LoginPageState extends State<LoginPage> {
   
   Widget build(BuildContext context) {
     
-    return new Scaffold(
+    return WillPopScope(
+      onWillPop: () async {
+        //Navigator.of(context).pop();
+        return false;
+      },
+      child: new Scaffold(
       resizeToAvoidBottomPadding: false,
       body: Stack(
         children: <Widget>[
           _showForm(),
-          //showCircularProgress(),
+          showCircularProgress(),
+          //showErrorMessage(),
         ],
       )  
-     );
+     )
+    );
   }
 }

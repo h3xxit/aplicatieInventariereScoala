@@ -20,14 +20,24 @@ class ModifyObject extends StatelessWidget{
             maxLines: 1,
             keyboardType: TextInputType.emailAddress,
             autofocus: false,
+            style: TextStyle(
+                color: Colors.deepOrange[700],
+                fontFamily: 'Montserrat',
+                //fontSize: 20,
+                fontWeight: FontWeight.w500),
             decoration: InputDecoration(
               //border: InputBorder.none,
               hintText: 'Nume vechi: ' + _name,
+              hintStyle: TextStyle(
+                fontFamily: 'Montserrat',
+                fontWeight: FontWeight.bold,
+                color: Colors.amber[900],
+              ),
               labelText: 'Introduceti noul nume:',
               labelStyle: TextStyle(
                 fontFamily: 'Montserrat',
                 fontWeight: FontWeight.bold,
-                color: Colors.grey,
+                color: Colors.amber[900],
               ),
               focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.yellow[700])
@@ -47,14 +57,24 @@ class ModifyObject extends StatelessWidget{
             maxLines: 1,
             keyboardType: TextInputType.emailAddress,
             autofocus: false,
+            style: TextStyle(
+                color: Colors.deepOrange[700],
+                fontFamily: 'Montserrat',
+                //fontSize: 20,
+                fontWeight: FontWeight.w500),
             decoration: InputDecoration(
               //border: InputBorder.none,
               hintText: 'Locatie veche: ' + _room,
+              hintStyle: TextStyle(
+                fontFamily: 'Montserrat',
+                fontWeight: FontWeight.bold,
+                color: Colors.amber[900],
+              ),
               labelText: 'Introduceti noua locatie:',
               labelStyle: TextStyle(
                 fontFamily: 'Montserrat',
                 fontWeight: FontWeight.bold,
-                color: Colors.grey,
+                color: Colors.amber[900],
               ),
               focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.yellow[700])

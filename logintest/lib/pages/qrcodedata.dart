@@ -121,13 +121,13 @@ class QrData extends StatelessWidget{
 
   showAlertDialog(BuildContext context) {
         Widget cancelButton = FlatButton(
-          child: Text("NU"),
+          child: Text("NU", style: new TextStyle(fontFamily: 'Montserrat'),),
           onPressed: () {
             Navigator.pop(context);
           },
         );
         Widget continueButton = FlatButton(
-          child: Text("DA"),
+          child: Text("DA", style: new TextStyle(fontFamily: 'Montserrat'),),
           onPressed: () async{
             Navigator.pop(context);
             await deleteObject();
@@ -136,9 +136,11 @@ class QrData extends StatelessWidget{
         );
 
         AlertDialog alert = AlertDialog(
-          title: Text("Sigur?"),
+          title: Text("Sigur?", style: new TextStyle(fontFamily: 'Montserrat'),),
           content: Text(
-              "Daca sunteti sigur/a ca doriti sa stergeti obiectul, apasati butonul 'DA', altfel apasati pe 'NU'!"),
+              "Daca sunteti sigur/a ca doriti sa stergeti obiectul, apasati butonul 'DA', altfel apasati pe 'NU'!",
+               style: new TextStyle(fontFamily: 'Montserrat'),
+              ),
           actions: [
             cancelButton,
             continueButton,
@@ -187,7 +189,7 @@ class QrData extends StatelessWidget{
                           showModifyButton('Modificati obiectul', context),
                         ];
                     }
-                    else
+                    else if(snapshot.hasError)
                     {
                         children= <Widget>[
                           Center(
@@ -200,6 +202,30 @@ class QrData extends StatelessWidget{
                                 fontSize: 45
                               ),
                             )
+                          )
+                        ];
+                    }
+                    else
+                    {
+                        var contrl=TextEditingController();
+                        contrl.text="Obiect in curs de cautare...";
+                        children= <Widget>[
+                            Center(
+                              child: TextField(
+                              readOnly: true,
+                              controller: contrl,
+                              maxLines: null,
+                              textAlign: TextAlign.center,
+                              style: new TextStyle(
+                                  color: Colors.deepOrange[700],
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Montserrat',
+                                  fontSize: 45
+                                ),
+                                decoration: InputDecoration(
+                                border: InputBorder.none,
+                               ),
+                              ),
                           )
                         ];
                     }

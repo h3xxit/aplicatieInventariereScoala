@@ -21,12 +21,22 @@ class _ScanState extends State<ScanScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(
+      onWillPop: () async {
+        return false;
+      }, 
+      child: Scaffold(
         body: new Center(
           child: new Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
+              Icon(
+                  Icons.filter_center_focus,
+                  size: 150.0,
+                  color: Colors.deepOrange[700],
+                ),
+                SizedBox(height: MediaQuery.of(context).size.height/30),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                 child: RaisedButton(
@@ -39,7 +49,7 @@ class _ScanState extends State<ScanScreen> {
                     child: new Text(
                       'Scaneaza cod QR!',
                     style: new TextStyle(
-                      color: Colors.black,
+                      color: Colors.deepOrange[700],
                       fontWeight: FontWeight.bold,
                       fontFamily: 'Montserrat',
                     ),
@@ -48,7 +58,9 @@ class _ScanState extends State<ScanScreen> {
               ),
             ],
           ),
-        ));
+        )
+      )
+    );
   }
 
   
