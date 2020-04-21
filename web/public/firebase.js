@@ -18,7 +18,7 @@ window.addEventListener('load', async function () {
     var pathArray = window.location.href.split('/');
     var length = pathArray.length
     console.log(pathArray[length-2]+'/'+pathArray[length-1])
-    await firebase.auth().signInWithEmailAndPassword('sorana.aurelia@gmail.com', 'abc1234').then(
+    await firebase.auth().signInWithEmailAndPassword('forweb@forweb.com', 'parolaparola').then(
         async function(user){
             console.log("user");
 
