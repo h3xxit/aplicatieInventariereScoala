@@ -50,7 +50,11 @@ class ModifyObject extends StatelessWidget{
   }
 
   Widget changeRoomInput(){
-    return Padding( 
+    return WillPopScope(
+      onWillPop: () async {
+        return false;
+      },
+      child: Padding( 
         padding: const EdgeInsets.fromLTRB(50.0, 0.0, 50.0, 0.0),
         child: new TextField(
             controller: myController1,
@@ -82,6 +86,7 @@ class ModifyObject extends StatelessWidget{
             ),
             //onSaved: (value) => _email = value.trim(),
         )
+      )
     );
   }
 

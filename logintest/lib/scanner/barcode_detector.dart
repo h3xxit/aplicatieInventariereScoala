@@ -31,10 +31,16 @@ class _ScanState extends State<ScanScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Icon(
+              /*Icon(
                   Icons.filter_center_focus,
                   size: 150.0,
                   color: Colors.deepOrange[700],
+                )*/
+                Image.asset(
+                'assets/varianta_rotunda.png',
+                height: MediaQuery.of(context).size.height/4,
+                width: MediaQuery.of(context).size.height/4,
+                //fit: BoxFit.scaleDown,
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height/30),
               Padding(

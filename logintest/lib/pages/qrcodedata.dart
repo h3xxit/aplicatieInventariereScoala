@@ -12,6 +12,7 @@ class QrData extends StatelessWidget{
   var _roomText = TextEditingController();
   final databaseReference = FirebaseDatabase.instance.reference();
   QrData(this._barcode);
+  bool updated=false;
 
   void getEmailId(_barcode)
   {
@@ -116,7 +117,7 @@ class QrData extends StatelessWidget{
 
   Future<void> deleteObject() async
   {
-      databaseReference.child('Objects/' + _email + '/' + _id).remove();
+    databaseReference.child('Objects/' + _email + '/' + _id).remove();
   }
 
   showAlertDialog(BuildContext context) {
@@ -168,90 +169,93 @@ class QrData extends StatelessWidget{
       onWillPop: () async {
         Navigator.of(context).pop();
         Navigator.push(context, MaterialPageRoute(builder: (context)=> SideBarLayout()));
-        return true;
+        return false;
       },
       child: FutureBuilder<Map<dynamic, dynamic>>(
-                  future: getData(),
-                  builder: (BuildContext context, AsyncSnapshot<Map<dynamic, dynamic>> snapshot) {
-                    
-                    List<Widget> children;
-                    
-                    if (snapshot.hasData) {
-                        updateData();
-                        children = <Widget>[
-                          showIcon(),
-                          SizedBox(height: MediaQuery.of(context).size.height/50),
-                          showData(_nameText),
-                          showData(_roomText),
-                          SizedBox(height: MediaQuery.of(context).size.height/50),
-                          showDeleteButton('Stergeti obiectul', context),
-                          SizedBox(height: MediaQuery.of(context).size.height/100),
-                          showModifyButton('Modificati obiectul', context),
-                        ];
-                    }
-                    else if(snapshot.hasError)
-                    {
-                        children= <Widget>[
-                          Center(
-                            child: Text(
-                            'Obiect negasit',
-                            style: new TextStyle(
-                                color: Colors.deepOrange[700],
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Montserrat',
-                                fontSize: 45
-                              ),
-                            )
-                          )
-                        ];
-                    }
-                    else
-                    {
-                        var contrl=TextEditingController();
-                        contrl.text="Obiect in curs de cautare...";
-                        children= <Widget>[
-                            Center(
-                              child: TextField(
-                              readOnly: true,
-                              controller: contrl,
-                              maxLines: null,
-                              textAlign: TextAlign.center,
-                              style: new TextStyle(
-                                  color: Colors.deepOrange[700],
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Montserrat',
-                                  fontSize: 45
-                                ),
-                                decoration: InputDecoration(
-                                border: InputBorder.none,
-                               ),
-                              ),
-                          )
-                        ];
-                    }
-                    return new Scaffold(
-                      appBar: AppBar(
-                        backgroundColor: Colors.yellow[700],
-                        title: new Text("Informatii obiect", style: TextStyle(fontFamily: 'Montserrat', fontWeight: FontWeight.w900, fontSize: 20, color:Colors.deepOrange[700])),
-                        leading: IconButton(
-                          icon: Icon(Icons.arrow_back,),
-                          onPressed: (){
-                            Navigator.of(context).pop();
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=> SideBarLayout()));
-                          },
-                        ), 
-                      ),
-                      body: new Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: children, 
-                      ), 
-                    );
-                  },
-              
-          )// Your Scaffold goes here.
-    );
+        future: getData(),
+        builder: (BuildContext context, AsyncSnapshot<Map<dynamic, dynamic>> snapshot) {
+          
+          List<Widget> children;
+          
 
-    
+          if (snapshot.hasData) {
+              if(!updated)
+              {
+                updateData();
+                updated=true;
+              }
+              children = <Widget>[
+                showIcon(),
+                SizedBox(height: MediaQuery.of(context).size.height/50),
+                showData(_nameText),
+                showData(_roomText),
+                SizedBox(height: MediaQuery.of(context).size.height/50),
+                showDeleteButton('Stergeti obiectul', context),
+                SizedBox(height: MediaQuery.of(context).size.height/100),
+                showModifyButton('Modificati obiectul', context),
+              ];
+          }
+          else if(snapshot.hasError)
+          {
+              children= <Widget>[
+                Center(
+                  child: Text(
+                  'Obiect negasit',
+                  style: new TextStyle(
+                      color: Colors.deepOrange[700],
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Montserrat',
+                      fontSize: 45
+                    ),
+                  )
+                )
+              ];
+          }
+          else
+          {
+              var contrl=TextEditingController();
+              contrl.text="Obiect in curs de cautare...";
+              children= <Widget>[
+                  Center(
+                    child: TextField(
+                    readOnly: true,
+                    controller: contrl,
+                    maxLines: null,
+                    textAlign: TextAlign.center,
+                    style: new TextStyle(
+                        color: Colors.deepOrange[700],
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Montserrat',
+                        fontSize: 45
+                      ),
+                      decoration: InputDecoration(
+                      border: InputBorder.none,
+                      ),
+                    ),
+                )
+              ];
+          }
+          return new Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.yellow[700],
+              title: new Text("Informatii obiect", style: TextStyle(fontFamily: 'Montserrat', fontWeight: FontWeight.w900, fontSize: 20, color:Colors.deepOrange[700])),
+              leading: IconButton(
+                icon: Icon(Icons.arrow_back,),
+                onPressed: (){
+                  Navigator.of(context).pop();
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=> SideBarLayout()));
+                },
+              ), 
+            ),
+            body: new Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: children, 
+            ), 
+          );
+        },
+          
+      )// Your Scaffold goes here.
+    );
   }
 }

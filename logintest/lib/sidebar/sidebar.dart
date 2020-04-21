@@ -140,9 +140,8 @@ class _SideBarState extends State<SideBar>
                         ),*/
                         Center(
                             child: CircleAvatar(
-                            child: Icon(
-                              Icons.perm_identity,
-                              color: Colors.white,
+                            child: Image.asset(
+                              'assets/varianta_rotunda.png',
                             ),
                             radius: 40,
                           ),
