@@ -14,34 +14,52 @@ firebase.initializeApp(firebaseConfig);
 
 const database = firebase.database();
 
-window.addEventListener('load', function () {
-
-    const nameUI = document.getElementById("nameobj");
-    const roomUI = document.getElementById("roomobj");
-    nameUI.innerHTML = ""
-    roomUI.innerHTML = ""
-
+window.addEventListener('load', async function () {
     var pathArray = window.location.href.split('/');
     var length = pathArray.length
+    console.log(pathArray[length-2]+'/'+pathArray[length-1])
+    await firebase.auth().signInWithEmailAndPassword('forweb@forweb.com', 'parolaparola').then(
+        async function(user){
+            console.log("user");
 
-    return objectRef = database.ref('Objects/' + pathArray[length-2] + '/' + pathArray[length-1]).once('value').then(function(snapshot) {
-        if(snapshot==null) {
-            window.location.replace(pathArray[length-2] + '/' + pathArray[length-1], 'notfound');
-        }
+            const nameUI = document.getElementById("nameobj");
+            const roomUI = document.getElementById("roomobj");
+            nameUI.innerHTML = ""
+            roomUI.innerHTML = ""
 
-        if(snapshot.val()==null) {
-            window.location.replace(pathArray[length-2] + '/' + pathArray[length-1], 'notfound');
-        }
-        
-        var name = snapshot.val().Name;
-        var room = snapshot.val().Room;
-        
-        nameUI.innerHTML = 'Obiect: ' + name;
-        roomUI.innerHTML = 'Sala: ' + room;
+            return objectRef = await database.ref('Objects/' + pathArray[length-2] + '/' + pathArray[length-1]).once('value').then(function(snapshot) {
+                console.log("am intrat in databse");
+                console.log(pathArray[length-2]+ '/' + pathArray[length-1])
+                
+                if(snapshot==null) {
+                    console.log("1");
+                    window.location.replace(pathArray[length-2] + '/' + pathArray[length-1], 'notfound');
+                }
 
-        if(name==null || room==null) {
-            window.location.replace(pathArray[length-2] + '/' + pathArray[length-1], 'notfound');
-        }
+                if(snapshot.val()==null) {
+                    console.log("2");
+                    window.location.replace(pathArray[length-2] + '/' + pathArray[length-1], 'notfound');
+                }
+                
+                var name = snapshot.val().Name;
+                var room = snapshot.val().Room;
+
+                console.log(name + " " + room);
+                
+                nameUI.innerHTML = 'Obiect: ' + name;
+                roomUI.innerHTML = 'Sala: ' + room;
+
+                if(name==null || room==null) {
+                    console.log("3");
+                    window.location.replace(pathArray[length-2] + '/' + pathArray[length-1], 'notfound');
+                }
+            },
+            function(err){
+                console.log("4");
+                window.location.replace(pathArray[length-2] + '/' + pathArray[length-1], 'notfound');
+            }
+        )
+    
             
     });
 
