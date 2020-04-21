@@ -3,10 +3,10 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logintest/bloc.navigation_bloc/navigation_bloc.dart';
-import 'package:logintest/pages/signup.dart';
 //import 'package:logintest/dialogs/dialogs.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:logintest/sidebar/menu_item.dart';
@@ -29,7 +29,10 @@ class _SideBarState extends State<SideBar>
   FirebaseUser user;
   //final bool sidebarIsOpened = false;
   final _animationDuration = const Duration(milliseconds: 500);
-
+  TextEditingController nameTxt = TextEditingController();
+  final databaseReference = FirebaseDatabase.instance.reference();
+  String txt = "";
+  bool _isSideBarOpen = false;
   @override
   void initState() {
     super.initState();
@@ -43,6 +46,14 @@ class _SideBarState extends State<SideBar>
 
   initUser() async{
     user = await _auth.currentUser();
+    databaseReference
+        .child('Teachers/' + user.email.replaceAll('.', ','))
+        .once()
+        .then((DataSnapshot snapshot) {
+           Map<dynamic, dynamic> map = snapshot.value;
+           nameTxt.text = map['Name'].toString();
+           txt = map['Name'].toString();
+    });
     setState(() {});
   }
   @override
@@ -56,7 +67,10 @@ class _SideBarState extends State<SideBar>
   void onIconPressed() {
     final animationStatus = _animationController.status;
     final isAnimationCompleted = animationStatus == AnimationStatus.completed;
-
+    
+    initUser();
+    //FocusScope.of(context).unfocus();
+    
     if (isAnimationCompleted) {
       sidebarIsOpenedStreamSink.add(false);
       _animationController.reverse();
@@ -68,6 +82,8 @@ class _SideBarState extends State<SideBar>
 
   @override
   Widget build(BuildContext context) {
+    if(_isSideBarOpen)
+      FocusScope.of(context).unfocus();
     final screenWidth = MediaQuery.of(context).size.width;
 
     return StreamBuilder<bool>(
@@ -80,31 +96,38 @@ class _SideBarState extends State<SideBar>
           bottom: 0,
           left: sidebarIsOpenedAsync.data ? 0 : -screenWidth,
           right: sidebarIsOpenedAsync.data ? 0 : screenWidth - 35,
-          child: Row(
+          onEnd: () {
+            if(sidebarIsOpenedAsync.data){
+              _isSideBarOpen = true;
+              FocusScope.of(context).unfocus();
+            }
+            else
+              _isSideBarOpen = false;
+          },
+          child: new Row(
             children: <Widget>[
               Expanded(
                 child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     color: Colors.yellow[700],
-                    child: Column(
+                    child: ListView(
                       children: <Widget>[
                         SizedBox(
-                          height: 70,
+                          height: 40,
                         ),
-                        ListTile(
-                          title: Text(
-                            "${user?.displayName}",
+                        /*ListTile(
+                          title: TextField(
+                            readOnly: true,
+                            controller: nameTxt,
+                            maxLines: null,
                             style: TextStyle(
                                 color: Colors.deepOrange[700],
                                 fontSize: 30,
+                                fontFamily: 'Montserrat',
                                 fontWeight: FontWeight.w800),
-                          ),
-                          subtitle: Text(
-                            "${user?.email}",
-                            style: TextStyle(
-                              color: Colors.amber[900],
-                              fontSize: 20,
-                            ),
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                ),
                           ),
                           leading: CircleAvatar(
                             child: Icon(
@@ -113,7 +136,46 @@ class _SideBarState extends State<SideBar>
                             ),
                             radius: 40,
                           ),
+                          //subtitle: Text(" "),
+                        ),*/
+                        Center(
+                            child: CircleAvatar(
+                            child: Icon(
+                              Icons.perm_identity,
+                              color: Colors.white,
+                            ),
+                            radius: 40,
+                          ),
                         ),
+                        TextField(
+                          readOnly: true,
+                          controller: nameTxt,
+                          maxLines: null,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: Colors.deepOrange[700],
+                              //fontSize: 30,
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w800),
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                              ),
+                        ),
+                        Center
+                        (   
+                            child: FittedBox(
+                              fit: BoxFit.fitWidth,
+                              child: Text(
+                                "${user?.email}",
+                                style: TextStyle(
+                                  color: Colors.amber[900],
+                                  //fontSize: 20,
+                                  fontFamily: 'Montserrat',
+                                ),
+                              ),
+                            ),
+                        ),
+                        
                         Divider(
                           height: 64.0,
                           thickness: 0.5,
@@ -130,8 +192,8 @@ class _SideBarState extends State<SideBar>
                           },
                         ),
                         MenuItem(
-                          icon: Icons.format_list_bulleted,
-                          title: "Inventar",
+                          icon: Icons.playlist_add,
+                          title: "Adaugati obiect",
                           onTap: (){
                             onIconPressed();
                             BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.InventoryClickedEvent);
@@ -162,7 +224,8 @@ class _SideBarState extends State<SideBar>
                           },
                         ),
                       ],
-                    )),
+                    )
+                  ),
               ),
               Align(
                 alignment: Alignment(0, -0.9),
@@ -196,13 +259,13 @@ class _SideBarState extends State<SideBar>
 
   showAlertDialog(BuildContext context) {
   Widget cancelButton = FlatButton(
-    child: Text("NU"),
+    child: Text("NU", style: new TextStyle(fontFamily: 'Montserrat'),),
     onPressed: () {
       Navigator.pop(context);
     },
   );
   Widget continueButton = FlatButton(
-    child: Text("DA"),
+    child: Text("DA", style: new TextStyle(fontFamily: 'Montserrat'),),
     onPressed: () async{
       Navigator.pop(context);
       await _auth.signOut();
@@ -214,9 +277,10 @@ class _SideBarState extends State<SideBar>
   );
 
   AlertDialog alert = AlertDialog(
-    title: Text("Sigur?"),
+    title: Text("Sigur?", style: new TextStyle(fontFamily: 'Montserrat'),),
     content: Text(
-        "Daca sunteti sigur/a ca doriti sa iesiti din cont, apasati butonul 'DA', altfel apasati pe 'NU'!"),
+        "Daca sunteti sigur/a ca doriti sa iesiti din cont, apasati butonul 'DA', altfel apasati pe 'NU'!",
+        style: new TextStyle(fontFamily: 'Montserrat'),),
     actions: [
       cancelButton,
       continueButton,
@@ -254,7 +318,6 @@ class CustomMenuClipper extends CustomClipper<Path>{
 
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) {
-    // TODO: implement shouldReclip
     return true;
   }
 }

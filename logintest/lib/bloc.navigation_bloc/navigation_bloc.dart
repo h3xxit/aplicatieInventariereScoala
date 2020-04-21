@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
@@ -8,9 +7,6 @@ import 'package:logintest/pages/rootpage.dart';
 import 'package:logintest/pages/myaccount.dart';
 import 'package:logintest/pages/inventory.dart';
 import 'package:logintest/loginstuff/authentication.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:logintest/pages/signup.dart';
-import 'package:logintest/dialogs/dialogs.dart';
 
 enum NavigationEvents {
   HomePageClickedEvent, 

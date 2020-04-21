@@ -22,14 +22,19 @@ class MenuItem extends StatelessWidget {
             SizedBox(
               width: 20,
             ),
-            Text(
-              title,
-              style: TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 26,
-                color: Colors.deepOrange[700],
-              ),
+            FittedBox(
+                fit:  BoxFit.fitWidth,
+                child: Text(
+                title,
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  //fontSize: 26,
+                  fontFamily: 'Montserrat',
+                  color: Colors.deepOrange[700],
+                ),
+              )
             )
+            
           ],
         ),
       ),
