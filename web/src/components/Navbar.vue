@@ -3,10 +3,10 @@
       <div class="uk-navbar-left">
 
         <div class="uk-navbar-item">
-           <img src="@/assets/logo.png" width="40" height="40">
+           <img src="@/assets/varianta_rotunda.png" width="45" height="45">
          </div>
          <div class="uk-navbar-item"> 
-            <div class="uk-text-medium uk-text-muted uk-text-uppercase">Nume Aplicatie</div>
+            <div class="uk-text-medium uk-text-muted uk-text-uppercase">Schoolventory</div>
          </div>
          
 
