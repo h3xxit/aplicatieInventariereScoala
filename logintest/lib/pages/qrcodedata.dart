@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:logintest/sidebar/sidebar_layout.dart';
 import 'package:logintest/pages/modifyobject.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class QrData extends StatelessWidget{
  
 
   String _barcode;
-  String _email, _id, _name="", _room="";
+  String _email, _id, _name="", _room="", _code="";
   var _nameText = TextEditingController();
   var _roomText = TextEditingController();
   final databaseReference = FirebaseDatabase.instance.reference();
@@ -15,19 +16,78 @@ class QrData extends StatelessWidget{
   bool updated=false;
   List<Widget> children;
   int ok=1;
+  FirebaseUser user;
+  
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   void getEmailId(_barcode)
   {
-      List<String> v=this._barcode.split('/');
-      this._email=v[v.length-2];
-      this._id=v[v.length-1];
+    if(this._barcode.contains("Code: ")) {
+      this._code = this._barcode.substring(6);
+
+      return;
+    }
+
+    List<String> v=this._barcode.split('/');
+    this._email=v[v.length-2];
+    this._id=v[v.length-1];
+  }
+
+  initUser() async{
+    user = await _auth.currentUser();
+    await databaseReference
+        .child('Teachers/' + user.email.replaceAll('.', ','))
+        .once()
+        .then((DataSnapshot snapshot) {
+           Map<dynamic, dynamic> map = snapshot.value;
+           _email = map['SchoolEmail'].toString();
+           
+    });
+  }
+
+  functie(item, code)
+  {
+    bool okFound = false;
+    if(item != null && item["Id"] == code) {
+      okFound = true;
+      _name = item["Name"];
+      _room = item["Room"];
+
+      _nameText.text = "Obiect: " + _name;
+      _roomText.text = "Sala: " + _room;
+    }
+    return okFound;
   }
 
   Future<Map<dynamic, dynamic>> getData () async
   {
       Map<dynamic, dynamic> map;
+      
+      if(this._barcode.contains("Code: ")) {
+        
+        await initUser();
+        String code = this._barcode.substring(6);
 
-      await databaseReference.child('Objects/' + _email + '/' + _id).once().then((DataSnapshot snapshot){
+        await databaseReference.child('Objects/' + _email).once().then((DataSnapshot snapshot) {
+          map = snapshot.value;
+
+          bool okFound = false;
+
+          for(var item in map.entries) {
+            okFound = functie(item.value, code);
+            if(okFound == true) {
+              this._id=item.key;
+              break;
+            }
+          }
+
+          if(okFound == false)
+            ok = 0;
+        });
+        
+      } else {
+
+        await databaseReference.child('Objects/' + _email + '/' + _id).once().then((DataSnapshot snapshot){
         
           map = snapshot.value;
           if(map!=null)
@@ -41,7 +101,8 @@ class QrData extends StatelessWidget{
           }
           else ok=0;
         
-      });
+        });
+      }
       
       return map;
   }
@@ -165,7 +226,7 @@ class QrData extends StatelessWidget{
 
   void updateData(){
     databaseReference.child('Objects/' + _email + '/' + _id).update({
-        "HasBeenChecked": true,
+      "HasBeenChecked": true,
     });
   }
 
@@ -182,11 +243,8 @@ class QrData extends StatelessWidget{
       child: FutureBuilder<Map<dynamic, dynamic>>(
         future: getData(),
         builder: (BuildContext context, AsyncSnapshot<Map<dynamic, dynamic>> snapshot) {
-          
-          
-          
 
-          if (snapshot.hasData) {
+          if (snapshot.hasData && ok!=0) {
               if(!updated)
               {
                 updateData();
