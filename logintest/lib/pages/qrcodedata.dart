@@ -13,6 +13,8 @@ class QrData extends StatelessWidget{
   final databaseReference = FirebaseDatabase.instance.reference();
   QrData(this._barcode);
   bool updated=false;
+  List<Widget> children;
+  int ok=1;
 
   void getEmailId(_barcode)
   {
@@ -24,15 +26,21 @@ class QrData extends StatelessWidget{
   Future<Map<dynamic, dynamic>> getData () async
   {
       Map<dynamic, dynamic> map;
+
       await databaseReference.child('Objects/' + _email + '/' + _id).once().then((DataSnapshot snapshot){
         
-        map = snapshot.value;
-
-        _name = map["Name"];
-        _room = map["Room"];
+          map = snapshot.value;
+          if(map!=null)
+          {
+          
+            _name = map["Name"];
+            _room = map["Room"];
         
-        _nameText.text = "Obiect: " + _name;
-        _roomText.text = "Sala: " + _room;
+            _nameText.text = "Obiect: " + _name;
+            _roomText.text = "Sala: " + _room;
+          }
+          else ok=0;
+        
       });
       
       return map;
@@ -175,7 +183,7 @@ class QrData extends StatelessWidget{
         future: getData(),
         builder: (BuildContext context, AsyncSnapshot<Map<dynamic, dynamic>> snapshot) {
           
-          List<Widget> children;
+          
           
 
           if (snapshot.hasData) {
@@ -195,7 +203,7 @@ class QrData extends StatelessWidget{
                 showModifyButton('Modificati obiectul', context),
               ];
           }
-          else if(snapshot.hasError)
+          else if(ok==0)
           {
               children= <Widget>[
                 Center(

@@ -74,8 +74,10 @@ class MyAccountPage extends StatelessWidget with NavigationStates {
             child: Icon(
               Icons.perm_identity,
               color: Colors.white,
+               
             ),
             radius: 50,
+            backgroundColor: Colors.deepOrange[700],
           ),
           SizedBox(
             height: 30,
