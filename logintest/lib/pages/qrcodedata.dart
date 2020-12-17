@@ -57,15 +57,20 @@ class QrData extends StatelessWidget {
       okFound = true;
       _name = item["Name"];
       _room = item["Room"];
-      _price = item["Price"];
-      _data = item["Date"];
-      _obs = item["Observations"];
+       if(item.containsKey("Price"))
+         _price = item["Price"];
+       if(item.containsKey("Date"))
+         _data = item["Date"];
+       if(item.containsKey("Observations"))
+         _obs = item["Observations"];
 
-      _nameText.text = "Obiect: " + _name;
-      _roomText.text = "Sala: " + _room;
-      _priceText.text = "Pret: " + _price;
-      _dataText.text = "Data: " + _data;
-      _obsText.text = "Observatii: " + _obs;
+         print(_obs);
+
+        _nameText.text = "Obiect: " + _name;
+        _roomText.text = "Sala: " + _room;
+        _priceText.text = "Pret: " + _price != null ? _price : "-";
+        _dataText.text = "Data: " + _data != null ? _data : "-";
+        _obsText.text = "Observatii: " + _obs != null ? _obs : "-";
     }
     return okFound;
   }
@@ -104,15 +109,23 @@ class QrData extends StatelessWidget {
         if (map != null) {
           _name = map["Name"];
           _room = map["Room"];
-          _price = map["Price"];
-          _data = map["Date"];
-          _obs = map["Observations"];
+
+          if(map.containsKey("Price"))
+            _price = map["Price"];
+
+          if(map.containsKey("Date"))
+            _data = map["Date"];
+
+          if(map.containsKey("Observations"))
+            _obs = map["Observations"];
+
+          print(_obs);
 
           _nameText.text = "Obiect: " + _name;
           _roomText.text = "Sala: " + _room;
-          _priceText.text = "Pret: " + _price;
-          _dataText.text = "Data: " + _data;
-          _obsText.text = "Observatii: " + _obs;
+          _priceText.text = "Pret: " + _price != null ? _price : "-";
+          _dataText.text = "Data: " + _data != null ? _data : "-";
+          _obsText.text = "Observatii: " + _obs != null ? _obs : "-";
         } else
           ok = 0;
       });

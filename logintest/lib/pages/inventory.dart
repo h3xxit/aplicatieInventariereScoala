@@ -73,7 +73,7 @@ class _InventoryPageState extends State<InventoryPage>  {
           )
         ),
         SizedBox(
-          height: 100,
+          height: 50,
         ),
         TextField(
           controller: nameTxt,
@@ -116,6 +116,32 @@ class _InventoryPageState extends State<InventoryPage>  {
             focusedBorder:  OutlineInputBorder(
                 borderSide: BorderSide(width: 1, color: Colors.yellow[700])),
             labelText: 'Sala',
+            labelStyle: TextStyle(fontSize: 16,color: Colors.deepOrange[700],fontFamily: 'Montserrat',),
+            //hintText: "Sala",
+            /* prefixIcon: const Icon(
+                  Icons.person,
+                  color: Colors.green,
+                ),*/
+          ),
+        ),
+        SizedBox(
+          height: 30,
+        ),
+        TextField(
+          controller: roomTxt,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              color: Colors.amber[900],
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+              fontFamily: 'Montserrat',),
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderSide: BorderSide(width: 1),
+            ),
+            focusedBorder:  OutlineInputBorder(
+                borderSide: BorderSide(width: 1, color: Colors.yellow[700])),
+            labelText: 'Id',
             labelStyle: TextStyle(fontSize: 16,color: Colors.deepOrange[700],fontFamily: 'Montserrat',),
             //hintText: "Sala",
             /* prefixIcon: const Icon(
