@@ -19,6 +19,7 @@ class QrData extends StatelessWidget {
   var _obsText = TextEditingController();
   var _priceText = TextEditingController();
   var _dataText = TextEditingController();
+  var _idText = TextEditingController();
   final databaseReference = FirebaseDatabase.instance.reference();
   QrData(this._barcode);
   bool updated = false;
@@ -55,22 +56,22 @@ class QrData extends StatelessWidget {
     bool okFound = false;
     if (item != null && item["Id"] == code) {
       okFound = true;
+      _id = item["Id"];
       _name = item["Name"];
       _room = item["Room"];
-       if(item.containsKey("Price"))
-         _price = item["Price"];
-       if(item.containsKey("Date"))
-         _data = item["Date"];
-       if(item.containsKey("Observations"))
-         _obs = item["Observations"];
+      if(item.containsKey("Price"))
+        _price = item["Price"];
+      if(item.containsKey("Date"))
+        _data = item["Date"];
+      if(item.containsKey("Observations"))
+        _obs = item["Observations"];
 
-         print(_obs);
-
-        _nameText.text = "Obiect: " + _name;
-        _roomText.text = "Sala: " + _room;
-        _priceText.text = "Pret: " + _price != null ? _price : "-";
-        _dataText.text = "Data: " + _data != null ? _data : "-";
-        _obsText.text = "Observatii: " + _obs != null ? _obs : "-";
+      _idText.text = "Id: " + _id;
+      _nameText.text = "Obiect: " + _name;
+      _roomText.text = "Sala: " + _room;
+      _priceText.text = "Pret: " + _price;
+      _dataText.text = "Data: " + _data;
+      _obsText.text = "Observatii: " + _obs;
     }
     return okFound;
   }
@@ -121,11 +122,12 @@ class QrData extends StatelessWidget {
 
           print(_obs);
 
+          _idText.text = "Id: " + _id;
           _nameText.text = "Obiect: " + _name;
           _roomText.text = "Sala: " + _room;
-          _priceText.text = "Pret: " + _price != null ? _price : "-";
-          _dataText.text = "Data: " + _data != null ? _data : "-";
-          _obsText.text = "Observatii: " + _obs != null ? _obs : "-";
+          _priceText.text = "Pret: " + _price;
+          _dataText.text = "Data: " + _data;
+          _obsText.text = "Observatii: " + _obs;
         } else
           ok = 0;
       });
@@ -285,6 +287,7 @@ class QrData extends StatelessWidget {
               children = <Widget>[
                 showIcon(),
                 SizedBox(height: MediaQuery.of(context).size.height / 50),
+                showData(_idText),
                 showData(_nameText),
                 showData(_roomText),
                 showData(_priceText),

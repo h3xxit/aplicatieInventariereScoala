@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:logintest/bloc.navigation_bloc/navigation_bloc.dart';
+import 'package:logintest/models/text_field_date_picker.dart';
+import 'package:intl/intl.dart';
 
 class InventoryPage extends StatefulWidget with NavigationStates{
 
@@ -12,6 +14,11 @@ class InventoryPage extends StatefulWidget with NavigationStates{
 class _InventoryPageState extends State<InventoryPage>  {
   TextEditingController nameTxt = new TextEditingController();
   TextEditingController roomTxt = new TextEditingController();
+  TextEditingController idTxt = new TextEditingController();
+  TextEditingController pretTxt = new TextEditingController();
+  TextEditingController dataTxt = new TextEditingController();
+  TextEditingController obsTxt = new TextEditingController();
+  String formattedDate=DateFormat('dd.MM.yyyy').format(DateTime.now());
   final databaseReference = FirebaseDatabase.instance.reference();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseUser user;
@@ -30,7 +37,7 @@ class _InventoryPageState extends State<InventoryPage>  {
             Map<dynamic, dynamic> map = snapshot.value;
             await databaseReference
             .child('PendingForPrint/' + map['SchoolEmail'].toString().replaceAll('.', ','))
-            .push().set({"Name" : nameTxt.text, "Room" : roomTxt.text, "HasBeenChecked" : false});
+            .push().set({"Name" : nameTxt.text, "Room" : roomTxt.text, "Id" : idTxt.text, "Date" : dataTxt.text, "Price" : pretTxt.text, "Observations" : obsTxt.text,"HasBeenChecked" : false});
             hideLoadingBar();
           });
     }
@@ -49,8 +56,7 @@ class _InventoryPageState extends State<InventoryPage>  {
 
   @override
   Widget build(BuildContext context) {
-
-   
+    dataTxt.text=formattedDate;
      
     var body = Center(
         child: Padding(
@@ -128,7 +134,7 @@ class _InventoryPageState extends State<InventoryPage>  {
           height: 30,
         ),
         TextField(
-          controller: roomTxt,
+          controller: idTxt,
           textAlign: TextAlign.center,
           style: TextStyle(
               color: Colors.amber[900],
@@ -142,6 +148,100 @@ class _InventoryPageState extends State<InventoryPage>  {
             focusedBorder:  OutlineInputBorder(
                 borderSide: BorderSide(width: 1, color: Colors.yellow[700])),
             labelText: 'Id',
+            labelStyle: TextStyle(fontSize: 16,color: Colors.deepOrange[700],fontFamily: 'Montserrat',),
+            //hintText: "Sala",
+            /* prefixIcon: const Icon(
+                  Icons.person,
+                  color: Colors.green,
+                ),*/
+          ),
+        ),
+        SizedBox(
+          height: 30,
+        ),
+        TextField(
+          controller: pretTxt,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              color: Colors.amber[900],
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+              fontFamily: 'Montserrat',),
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderSide: BorderSide(width: 1),
+            ),
+            focusedBorder:  OutlineInputBorder(
+                borderSide: BorderSide(width: 1, color: Colors.yellow[700])),
+            labelText: 'Pret',
+            labelStyle: TextStyle(fontSize: 16,color: Colors.deepOrange[700],fontFamily: 'Montserrat',),
+            //hintText: "Sala",
+            /* prefixIcon: const Icon(
+                  Icons.person,
+                  color: Colors.green,
+                ),*/
+          ),
+        ),
+        SizedBox(
+          height: 30,
+        ),
+        Theme(
+          data: ThemeData(primarySwatch: Colors.deepOrange, splashColor: Colors.amber[900]),
+          child: MyTextFieldDatePicker(
+            labelText: "Data",
+            prefixIcon: Icon(Icons.date_range),
+            suffixIcon: Icon(Icons.arrow_drop_down),
+            lastDate: DateTime.now().add(Duration(days: 366)),
+            firstDate: DateTime(1900),
+            initialDate: DateTime.now().add(Duration(days: 1)),
+            onDateChanged: (selectedDate) {
+              formattedDate=DateFormat('dd.MM.yyyy').format(selectedDate);
+              dataTxt.text=formattedDate;
+            },
+          ),
+        ),
+        
+        /*TextField(
+          controller: dataTxt,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              color: Colors.amber[900],
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+              fontFamily: 'Montserrat',),
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderSide: BorderSide(width: 1),
+            ),
+            focusedBorder:  OutlineInputBorder(
+                borderSide: BorderSide(width: 1, color: Colors.yellow[700])),
+            labelText: 'Data',
+            labelStyle: TextStyle(fontSize: 16,color: Colors.deepOrange[700],fontFamily: 'Montserrat',),
+            //hintText: "Sala",
+            /* prefixIcon: const Icon(
+                  Icons.person,
+                  color: Colors.green,
+                ),*/
+          ),
+        ),*/
+        SizedBox(
+          height: 30,
+        ),
+        TextField(
+          controller: obsTxt,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              color: Colors.amber[900],
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+              fontFamily: 'Montserrat',),
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderSide: BorderSide(width: 1),
+            ),
+            focusedBorder:  OutlineInputBorder(
+                borderSide: BorderSide(width: 1, color: Colors.yellow[700])),
+            labelText: 'Observatii',
             labelStyle: TextStyle(fontSize: 16,color: Colors.deepOrange[700],fontFamily: 'Montserrat',),
             //hintText: "Sala",
             /* prefixIcon: const Icon(
