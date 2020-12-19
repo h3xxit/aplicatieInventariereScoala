@@ -89,6 +89,8 @@ class ModifyObject extends StatelessWidget {
     databaseReference.child('Objects/' + _email + '/' + _id).update({
       'Name': (myController.text == "") ? _name : myController.text,
       'Room': (myController1.text == "") ? _room : myController1.text,
+      //'Price': (priceController.text == "") ? _price : priceController.text,
+      //'Date': (dateController.text == "") ? _price : priceController.text,
       'Observations': (obsController.text == "") ? _obs : obsController.text
     });
   }

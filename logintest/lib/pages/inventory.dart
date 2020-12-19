@@ -22,24 +22,65 @@ class _InventoryPageState extends State<InventoryPage>  {
   final databaseReference = FirebaseDatabase.instance.reference();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseUser user;
-   bool _loading = false;
+  bool _loading = false;
+
+  Future<int> genereazaId() async {
+    Map<dynamic, dynamic> map;
+
+    user = await _auth.currentUser();
+    await databaseReference
+        .child('Teachers/' + user.email.replaceAll('.', ','))
+        .once()
+        .then((DataSnapshot snapshot) {
+          Map<dynamic, dynamic> map = snapshot.value;
+          String email = map['SchoolEmail'].toString().replaceAll('.', ',');
+          databaseReference
+            .child('Objects/' + email)
+            .once()
+            .then((DataSnapshot snapshot) {
+              map = snapshot.value;
+            });
+        });
+
+    await databaseReference
+        .child('Teachers/' + user.email.replaceAll('.', ','))
+        .once()
+        .then((DataSnapshot snapshot) {
+          Map<dynamic, dynamic> map = snapshot.value;
+          String email = map['SchoolEmail'].toString().replaceAll('.', ',');
+          databaseReference
+            .child('PendingForPrint/' + email)
+            .once()
+            .then((DataSnapshot snapshot) {
+              map.addAll(snapshot.value);
+            });
+        });
+
+    var sortedList = map.entries.toList()..sort((e1, e2) => int.parse(e1.value["Id"]).compareTo(int.parse(e2.value["Id"])));
+    int length = sortedList.length;
+    var da = sortedList.elementAt(length-1);
+    return int.parse(da.value["Id"])+1;
+  }
+
   void adauga() async{
     setState(() {
-          
         _loading = true;
     });
     try{
+        if(idTxt.text != null && idTxt.text != "")
+          idTxt.text = genereazaId().toString();
+        
         user = await _auth.currentUser();
         databaseReference
             .child('Teachers/' + user.email.replaceAll('.', ','))
             .once()
             .then((DataSnapshot snapshot) async {
-            Map<dynamic, dynamic> map = snapshot.value;
-            await databaseReference
-            .child('PendingForPrint/' + map['SchoolEmail'].toString().replaceAll('.', ','))
-            .push().set({"Name" : nameTxt.text, "Room" : roomTxt.text, "Id" : idTxt.text, "Date" : dataTxt.text, "Price" : pretTxt.text, "Observations" : obsTxt.text,"HasBeenChecked" : false});
-            hideLoadingBar();
-          });
+              Map<dynamic, dynamic> map = snapshot.value;
+              await databaseReference
+              .child('PendingForPrint/' + map['SchoolEmail'].toString().replaceAll('.', ','))
+              .push().set({"Name" : nameTxt.text, "Room" : roomTxt.text, "Id" : idTxt.text, "Date" : dataTxt.text, "Price" : pretTxt.text, "Observations" : obsTxt.text,"HasBeenChecked" : false});
+              hideLoadingBar();
+            });
     }
     catch (Exception){
         hideLoadingBar();
