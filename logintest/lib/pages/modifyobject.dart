@@ -86,7 +86,7 @@ class ModifyObject extends StatelessWidget {
   }
 
   Future<void> updateData() async {
-    databaseReference.child('Objects/' + _email + '/' + _id).update({
+    await databaseReference.child('Objects/' + _email + '/' + _id).update({
       'Name': (myController.text == "") ? _name : myController.text,
       'Room': (myController1.text == "") ? _room : myController1.text,
       //'Price': (priceController.text == "") ? _price : priceController.text,
