@@ -196,7 +196,7 @@ class QrData extends StatelessWidget {
               context,
               MaterialPageRoute(
                   builder: (context) =>
-                      ModifyObject(_email, _id, _name, _room, _obs)));
+                      ModifyObject(_email, _id, _name, _room, _obs, _data, _price)));
         },
         child: new Text(
           text,

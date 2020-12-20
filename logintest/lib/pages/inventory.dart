@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:logintest/bloc.navigation_bloc/navigation_bloc.dart';
 import 'package:logintest/models/text_field_date_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:logintest/sidebar/sidebar_layout.dart';
 
 class InventoryPage extends StatefulWidget with NavigationStates {
   @override
@@ -99,12 +100,48 @@ class _InventoryPageState extends State<InventoryPage> {
 
     for(var entry in map.entries) {
       if((entry.value["Id"]).toString() == idTxt.text) {
-        /*TODO apare mesaj daca vrea sa ii modifice id-ul obiectului din lista care asteapta printing
-          -daca da -> cheama await modificaIdObiectPrinting(email, entry.key);
-          -daca nu -> inchide fereastra
-        */
-        print("exista in print");
-        await modificaIdObiectPrinting(email, entry.key);
+            Widget cancelButton = FlatButton(
+              child: Text(
+                "NU",
+                style: new TextStyle(fontFamily: 'Montserrat'),
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            );
+            Widget continueButton = FlatButton(
+              child: Text(
+                "DA",
+                style: new TextStyle(fontFamily: 'Montserrat'),
+              ),
+              onPressed: () async {
+                Navigator.pop(context);
+                await modificaIdObiectPrinting(email, entry.key);
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => SideBarLayout()));
+              },
+            );
+
+            AlertDialog alert = AlertDialog(
+              title: Text(
+                "Sigur?",
+                style: new TextStyle(fontFamily: 'Montserrat'),
+              ),
+              content: Text(
+                "Exista un obiect neprintat cu acest Id. Daca doriti sa ii modificati Id-ul, apasati butonul 'DA', altfel apasati 'NU'",
+                style: new TextStyle(fontFamily: 'Montserrat'),
+              ),
+              actions: [
+                cancelButton,
+                continueButton,
+              ],
+            );
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return alert;
+              },
+            );
       }
     }
 
@@ -117,8 +154,36 @@ class _InventoryPageState extends State<InventoryPage> {
 
     for(var entry in map.entries) {
       if((entry.value["Id"]).toString() == idTxt.text) {
-        /*TODO eroare ca exista deja obiect cu id-ul asta -> inchide fereastra*/
-        print("exista in obj");
+        Widget cancelButton = FlatButton(
+              child: Text(
+                "ANULARE",
+                style: new TextStyle(fontFamily: 'Montserrat'),
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            );
+            AlertDialog alert = AlertDialog(
+              title: Text(
+                "Eroare",
+                style: new TextStyle(fontFamily: 'Montserrat'),
+              ),
+              content: Text(
+                "Exista deja un obiect cu acest Id.",
+                style: new TextStyle(fontFamily: 'Montserrat'),
+              ),
+              actions: [
+                cancelButton,
+              ],
+            );
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return alert;
+              },
+            );
+        
+        //print("exista in obj");
         break;
       }
     }
