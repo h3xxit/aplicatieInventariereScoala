@@ -2,15 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:logintest/bloc.navigation_bloc/navigation_bloc.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:logintest/pages/qrcodedata.dart';
+import 'package:logintest/models/text_field_date_picker.dart';
+import 'package:intl/intl.dart';
 
 class ModifyObject extends StatelessWidget {
   @override
-  String _email, _id, _name, _room, _obs;
+  String _email, _id, _name, _room, _obs, _date, _price;
+  
   final databaseReference = FirebaseDatabase.instance.reference();
   final myController = TextEditingController();
   final myController1 = TextEditingController();
   final obsController = TextEditingController();
-  ModifyObject(this._email, this._id, this._name, this._room, this._obs);
+  final priceController = TextEditingController();
+  final dateController = TextEditingController();
+  ModifyObject(this._email, this._id, this._name, this._room, this._obs, this._date, this._price);
 
   Widget changeNameInput() {
     return Padding(
@@ -90,8 +95,8 @@ class ModifyObject extends StatelessWidget {
       'Name': (myController.text == "") ? _name : myController.text,
       'Room': (myController1.text == "") ? _room : myController1.text,
       //TODO
-      //'Price': (priceController.text == "") ? _price : priceController.text,
-      //'Date': (dateController.text == "") ? _price : priceController.text,
+      'Price': (priceController.text == "") ? _price : priceController.text,
+      'Date': (dateController.text == "") ? _date : dateController.text,
       'Observations': (obsController.text == "") ? _obs : obsController.text
     });
   }
@@ -163,6 +168,64 @@ class ModifyObject extends StatelessWidget {
         ));
   }
 
+  Widget showPriceTextField() {
+    return Padding(
+        padding: const EdgeInsets.fromLTRB(50.0, 0.0, 50.0, 0.0),
+        child: new TextField(
+          keyboardType: TextInputType.multiline,
+          maxLines: null,
+          controller: priceController,
+          autofocus: false,
+          style: TextStyle(
+              color: Colors.deepOrange[700],
+              fontFamily: 'Montserrat',
+              //fontSize: 20,
+              fontWeight: FontWeight.w500),
+          decoration: InputDecoration(
+            //border: InputBorder.none,
+            hintText: 'Pret vechi: ' + _price,
+            hintStyle: TextStyle(
+              fontFamily: 'Montserrat',
+              fontWeight: FontWeight.bold,
+              color: Colors.amber[900],
+            ),
+            labelText: 'Introduceti noul pret:',
+            labelStyle: TextStyle(
+              fontFamily: 'Montserrat',
+              fontWeight: FontWeight.bold,
+              color: Colors.amber[900],
+            ),
+            focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.yellow[700])),
+          ),
+          //print(_name);
+          //onSaved: (value) => _email = value.trim(),
+        ));
+  }
+
+  Widget showDateTextField() {
+    String formattedDate = _date;
+    print(formattedDate);
+    return Padding(
+        padding: const EdgeInsets.fromLTRB(50.0, 0.0, 50.0, 0.0),
+        child: new Theme(
+          data: ThemeData(
+              primarySwatch: Colors.deepOrange, splashColor: Colors.amber[900]),
+          child: MyTextFieldDatePicker(
+            labelText: "Data",
+            prefixIcon: Icon(Icons.date_range),
+            suffixIcon: Icon(Icons.arrow_drop_down),
+            lastDate: DateTime.now().add(Duration(days: 366)),
+            firstDate: DateTime(1900),
+            initialDate: DateFormat("dd.MM.yyyy").parse(_date),
+            onDateChanged: (selectedDate) {
+              formattedDate = DateFormat('dd.MM.yyyy').format(selectedDate);
+              dateController.text = formattedDate;
+            },
+          ),
+        ),);
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -194,7 +257,11 @@ class ModifyObject extends StatelessWidget {
             changeRoomInput(),
             SizedBox(height: MediaQuery.of(context).size.height / 50),
             showObsTextField(),
-            SizedBox(height: MediaQuery.of(context).size.height / 20),
+            SizedBox(height: MediaQuery.of(context).size.height / 50),
+            showPriceTextField(),
+            SizedBox(height: MediaQuery.of(context).size.height / 50),
+            showDateTextField(),
+            SizedBox(height: MediaQuery.of(context).size.height / 25),
             showModifyButton('Modifica', context),
           ])
         ],
