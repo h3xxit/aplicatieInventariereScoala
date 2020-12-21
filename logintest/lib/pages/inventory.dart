@@ -55,9 +55,13 @@ class _InventoryPageState extends State<InventoryPage> {
       ..sort((e1, e2) =>
           e1.value["Id"].compareTo(e2.value["Id"]));
     int length = sortedList.length;*/
+
     int maxId=0;
     for(var entry in map.entries) {
       int x;
+      if(entry.key == "-1" || entry.value["Id"] == null)
+        continue;
+
       try {
         x=int.parse(entry.value["Id"]);
       } catch(FormatException) {
@@ -78,9 +82,10 @@ class _InventoryPageState extends State<InventoryPage> {
     });
   }
 
-  Future<void> verificaId() async {
+  Future<int> verificaId() async {
     Map<dynamic, dynamic> map;
     String email;
+    int ok=1;
 
     user = await _auth.currentUser();
     await databaseReference
@@ -107,6 +112,7 @@ class _InventoryPageState extends State<InventoryPage> {
               ),
               onPressed: () {
                 Navigator.pop(context);
+                ok=0;
               },
             );
             Widget continueButton = FlatButton(
@@ -115,6 +121,7 @@ class _InventoryPageState extends State<InventoryPage> {
                 style: new TextStyle(fontFamily: 'Montserrat'),
               ),
               onPressed: () async {
+                ok=1;
                 Navigator.pop(context);
                 await modificaIdObiectPrinting(email, entry.key);
                 Navigator.push(
@@ -136,12 +143,14 @@ class _InventoryPageState extends State<InventoryPage> {
                 continueButton,
               ],
             );
-            showDialog(
+            await showDialog(
               context: context,
               builder: (BuildContext context) {
                 return alert;
               },
             );
+            
+            break;
       }
     }
 
@@ -183,10 +192,12 @@ class _InventoryPageState extends State<InventoryPage> {
               },
             );
         
-        //print("exista in obj");
+        ok=0;
         break;
       }
     }
+
+    return ok;
   }
 
   Future<void> adauga() async {
@@ -197,7 +208,11 @@ class _InventoryPageState extends State<InventoryPage> {
       if (idTxt.text.isEmpty) {
         idTxt.text = (await genereazaId()).toString();
       } else {
-        await verificaId();
+        if(await verificaId() == 0) {
+          hideLoadingBar();
+          return;
+        }
+          
       }
 
       user = await _auth.currentUser();
